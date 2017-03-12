@@ -18,6 +18,7 @@ const config = {
   dir_client : 'src',
   dir_dist   : 'dist',
   dir_public : 'public',
+  // dir_server : '/api/server',
   dir_server : 'server',
   dir_test   : 'tests',
 
@@ -32,7 +33,7 @@ const config = {
   // ----------------------------------
   compiler_babel : {
     cacheDirectory : true,
-    plugins        : ['transform-runtime'],
+    plugins        : ['react-html-attrs', 'transform-runtime'],
     presets        : ['es2015', 'react', 'stage-0']
   },
   compiler_devtool         : 'source-map',
@@ -49,7 +50,9 @@ const config = {
     'react',
     'react-redux',
     'react-router',
-    'redux'
+    'redux',
+    'react-bootstrap',
+    'react-dropzone'
   ],
 
   // ----------------------------------

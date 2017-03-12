@@ -1,4 +1,5 @@
 const project = require('../config/project.config')
+// const server = require('../api/server/server')
 const server = require('../server/main')
 const debug = require('debug')('app:bin:dev-server')
 

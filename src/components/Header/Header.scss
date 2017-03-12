@@ -1,4 +1,71 @@
-.route--active {
-  font-weight: bold;
-  text-decoration: underline;
+/* Header
+=================================================================== */
+	
+header {
+	background: #fff;
+	border-bottom: 5px solid #f6f6f6;
+}
+#header-logo {
+	height: 50px;
+	width: 60px;
+}
+
+.navbar-header {
+	height: 55px;
+}
+
+.navbar-brand {
+	padding-top: 5px;
+}
+
+.navbar, 
+.navbar-inner, 
+.nav {
+	
+	background: #fff !important;
+	border: none;
+	-webkit-box-shadow: none;
+     -moz-box-shadow: none;
+          box-shadow: none;
+	padding: 0px;
+	margin: 0;	
+}
+
+.navbar-inner {
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+
+.navbar .nav > li > a {
+	color: #666;
+	border-top:4px solid #fff;
+	text-shadow: none;
+	font-size: 16px;
+	padding: 20px;
+
+}
+
+.navbar .nav > li > a:focus,
+.navbar .nav > li > a:hover {
+	border-top:4px solid #89c236;
+  	background: #89c236 !important;		
+  	color: #fff;
+}
+
+.navbar .nav > .active > a,
+.navbar .nav > .active > a:hover,
+.navbar .nav > .active > a:focus {
+  	color: #89c236;
+  	text-decoration: none;
+	border-top:4px solid #89c236;
+  	background-color: #fff !important;	
+  	-webkit-box-shadow: none;
+       -moz-box-shadow: none;
+          	box-shadow: none;
+}
+
+.navbar .btn-navbar {
+	position: absolute;
+	right: 50px;
+	top: 15px;
 }
