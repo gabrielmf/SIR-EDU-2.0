@@ -1,44 +1,84 @@
 import React from 'react'
-import Dropzone from 'components/Dropzone'
+import RegisterForm from './RegisterForm'
+import { Step, Stepper, StepButton } from 'material-ui/Stepper';
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import './RegisterStudent.scss'
 
 export default class RegisterStudent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            file: null
+            stepIndex: 0,
         };
-        this.onImageDrop = this.onImageDrop.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    onImageDrop(files) {
-        console.log('Arquivo enviado com sucesso');
-        this.setState({ file: files[0] });
+    handleSubmit(form) {
+        console.log('enviando form', form);
+        //this.props.saveStudent(this.state);
     }
+
+    handleNext = () => {
+    const {stepIndex} = this.state;
+    if (stepIndex < 2) {
+      this.setState({stepIndex: stepIndex + 1});
+    }
+  };
+
+  handlePrev = () => {
+    const {stepIndex} = this.state;
+    if (stepIndex > 0) {
+      this.setState({stepIndex: stepIndex - 1});
+    }
+  };
 
     render() {
+        const {stepIndex} = this.state;
+        const contentStyle = {margin: '0 16px'};
+
         return (
             <div class="container register-student">
-                <div class="row">
+                <div class="col-md-12">
                     <h1>Cadastro de Aluno</h1>
-                    <form name="registerStudent">
-                        <div class="col-md-8">
-                            <strong>Inserir imagem:</strong>
-                            <span>
-                                <Dropzone
-                                    multiple={false}
-                                    accept={"image/*"}
-                                    onDrop={this.onImageDrop}
-                                    text={"Arraste e solte uma imagem ou clique no botão para selecionar um arquivo"}>
-                                </Dropzone>
-                            </span>
-                            {this.state.file ?
-                            <div class="col-md-4 pull-right">
-                                <img src={this.state.file.preview} height="100"/>
-                            </div> : null}
-                            <h5>Matrícula:</h5><span><input type="number" class="form-control"/></span>
+                    <Stepper linear={false} activeStep={stepIndex}>
+                        <Step>
+                            <StepButton onClick={() => this.setState({stepIndex: 0})}>
+                            Preencha os dados do aluno
+                            </StepButton>
+                        </Step>
+                        <Step>
+                            <StepButton onClick={() => this.setState({stepIndex: 1})}>
+                            Atividades Extraclasse
+                            </StepButton>
+                        </Step>
+                        <Step>
+                            <StepButton onClick={() => this.setState({stepIndex: 2})}>
+                            Necessidades Educacionais Especiais
+                            </StepButton>
+                        </Step>
+                        </Stepper>
+                        <div style={contentStyle}>
+                        <div class="register-student-form col-md-12">
+                            <RegisterForm step={stepIndex} handleSubmit={this.handleSubmit}/>
                         </div>
-                    </form>
+                        <div class="col-md-12 text-center">
+                            <div class="stepper-pagination">
+                                <FlatButton
+                                label="Back"
+                                disabled={stepIndex === 0}
+                                onTouchTap={this.handlePrev}
+                                style={{marginRight: 12}}
+                                />
+                                <RaisedButton
+                                label="Next"
+                                disabled={stepIndex === 2}
+                                primary={true}
+                                onTouchTap={this.handleNext}
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

@@ -11,28 +11,28 @@ let checkPermissionsMiddleware = require('../../middlewares/check-permissions');
 //router.use(checkPermissionsMiddleware);
 
 //TODO 1 - middleware to check user permissions, 2- treat errors with some middleware
-router.post('/students/add', upload.any(), function(req, res, next) {
-    // let newStudent = {};
+router.post('/students', upload.any(), function(req, res, next) {
+    let newStudent = {};
 
-    // Object.assign(newStudent, req.body);
+    Object.assign(newStudent, req.body);
 
-    // if(req.files.length > 0) {
-    //     let file = req.files[0];
-    //     newStudent['image.path'] = file.path;
-    //     newStudent['image.contentType'] = file.mimetype;
-    // }
-    // studentService.save(newStudent)
-    //     .then((data) => {
-    //         res.json(data);
-    //         res.end();
-    //     })
-    //     .catch((err) => {
-    //         console.log(err);
-    //         next(err);
-    // });
+    if(req.files.length > 0) {
+        let file = req.files[0];
+        newStudent['image.path'] = file.path;
+        newStudent['image.contentType'] = file.mimetype;
+    }
+    studentService.save(newStudent)
+        .then((data) => {
+            res.json(data);
+            res.end();
+        })
+        .catch((err) => {
+            console.log(err);
+            next(err);
+    });
 });
 
-router.get('/students/list', function(req, res, next) {
+router.get('/students', function(req, res, next) {
     studentService.find()
         .then((data) => {
             res.json(data);
@@ -74,7 +74,7 @@ router.delete('/students/:id', function(req, res, next) {
     })
 });
 
-router.put('/students/update', upload.any(), function(req, res, next) {
+router.put('/students', upload.any(), function(req, res, next) {
     let updateStudent = {};
     Object.assign(updateStudent, req.body);
 

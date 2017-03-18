@@ -17,7 +17,6 @@ export default (store) => ({
 
       /*  Return getComponent   */
       cb(null, Counter)
-
     /* Webpack named bundle   */
     }, 'counter')
   }

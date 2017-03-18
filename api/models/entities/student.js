@@ -5,14 +5,14 @@ let mongoose = require('mongoose'),
 
 let StudentSchema = new Schema({
   name: { type: String },
-  // fatherName: { type: String },
-  // motherName: { type: String },
-  // birthDate: { type: Date},
-  image: { path: String, contentType: String }, //Link to student image
-  // responsible: { type: String},
-  // relationship: { type: String},
-  // address: { type: String},
-  // cid: { type: Number},
+  fatherName: { type: String },
+  motherName: { type: String },
+  birthDate: { type: Date},
+  // image: { path: String, contentType: String }, //Link to student image
+  responsible: { type: String},
+  relationship: { type: String},
+  address: { type: String},
+  cid: { type: Number},
   // historical: { type: String},
   // active: { type: Boolean },
   // specialNeeds: [{ type: String }],
