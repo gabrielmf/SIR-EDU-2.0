@@ -51,8 +51,10 @@ const config = {
     'react-redux',
     'react-router',
     'redux',
-    'react-bootstrap',
-    'react-dropzone'
+    'react-dropzone',
+    'material-ui',
+    'redux-api-middleware',
+    'react-addons-pure-render-mixin'
   ],
 
   // ----------------------------------

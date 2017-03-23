@@ -16,7 +16,7 @@ export default class RegisterStudent extends React.Component {
 
     handleSubmit(form) {
         console.log('enviando form', form);
-        //this.props.saveStudent(this.state);
+        this.props.saveStudent(form);
     }
 
     handleNext = () => {
@@ -40,7 +40,7 @@ export default class RegisterStudent extends React.Component {
         return (
             <div class="container register-student">
                 <div class="col-md-12">
-                    <h1>Cadastro de Aluno</h1>
+                    <h1 class="text-center">Cadastro de Aluno</h1>
                     <Stepper linear={false} activeStep={stepIndex}>
                         <Step>
                             <StepButton onClick={() => this.setState({stepIndex: 0})}>
@@ -55,6 +55,11 @@ export default class RegisterStudent extends React.Component {
                         <Step>
                             <StepButton onClick={() => this.setState({stepIndex: 2})}>
                             Necessidades Educacionais Especiais
+                            </StepButton>
+                        </Step>
+                         <Step>
+                            <StepButton onClick={() => this.setState({stepIndex: 2})}>
+                            Finalizar
                             </StepButton>
                         </Step>
                         </Stepper>

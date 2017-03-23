@@ -1,6 +1,7 @@
 import React from 'react'
 import { TextField, SelectField, MenuItem, DatePicker, Checkbox } from 'material-ui';
 import Dropzone from 'components/Dropzone'
+import MultipleCheckboxes from './MultipleCheckboxes';
 
 const dropzoneStyle = {
     maxWidth: '50%',
@@ -10,15 +11,23 @@ const dropzoneStyle = {
     borderRadius: '5px'
 }
 
-{/*<Dropzone
-    style={dropzoneStyle}
-    multiple={false}
-    accept={"image/*"}
-    onDrop={this.onImageDrop}
-    text={"Arraste e solte uma imagem ou clique no botão para selecionar um arquivo"}>
-</Dropzone>*/}
-
-const specialNeeds = [{name: 'Altas Habilidades/Superdotado', id: 'a'},{name: 'b', id: 'b'},{name: 'c', id: 'c'}];
+const specialNeeds = [{name: 'Altas Habilidades/Superdotado'},
+    {name: 'Deficiência Visual/Cegueira'},
+    {name: 'Deficiência Física'},
+    {name: 'Dislexia'},
+    {name: 'Deficiência Múltipla'},
+    {name: 'Síndrome de Ritt'},
+    {name: 'Transtorno do Espectro Autista'},
+    {name: 'Baixa Visão'},
+    {name: 'Deficiência Auditiva/Surdez'},
+    {name: 'Deficiência Intelectual'},
+    {name: 'Transtorno de Oposição e desafio(TOD)'},
+    {name: 'Síndrome de Down'},
+    {name: 'Surdocegueira'},
+    {name: 'Síndrome do X frágil'},
+    {name: 'Transtornos psicóticos agudos e transitórios'},
+    {name: 'Transtorno de conduta'}
+];
 
 export default class RegisterForm extends React.Component {
     constructor(props) {
@@ -35,7 +44,8 @@ export default class RegisterForm extends React.Component {
 
     onImageDrop(files) {
         console.log('Arquivo enviado com sucesso');
-        this.setState({ file: files[0] });
+        console.log(files)
+        this.setState({ file: files });
     }
 
     handleChange(event, id, valueParam) {
@@ -76,7 +86,7 @@ export default class RegisterForm extends React.Component {
     }
 
     handleEditorChange(evt) {
-        console.log("it works bitches")
+        console.log("editor")
     }
 
     render() {
@@ -84,6 +94,18 @@ export default class RegisterForm extends React.Component {
             <form onSubmit={this.handleSubmit}>
                 {this.props.step === 0 && 
                     <div>
+                        <div class="col-md-12">
+                            <label>Imagem do aluno:</label>
+                            <span class="text-center">
+                                <Dropzone
+                                    multiple={false}
+                                    accept={"image/*"}
+                                    onDrop={this.onImageDrop}
+                                    initConfig={this.state.file}
+                                    text={"Arraste e solte uma imagem ou clique no botão para selecionar um arquivo"}>
+                                </Dropzone>
+                            </span>
+                        </div>
                         <div class="col-md-6">
                             <TextField class="col-md-6" fullWidth={true} value={this.state.name || ''} type="text" name="name" onChange={this.handleChange} floatingLabelText="Nome"/>
                             <TextField class="col-md-6" fullWidth={true} value={this.state.registration || ''} type="number" name="registration" onChange={this.handleChange}  floatingLabelText="Matrícula"/>
@@ -117,18 +139,8 @@ export default class RegisterForm extends React.Component {
                     </div>
                 }
                 {this.props.step === 2 &&
-                    <div>{
-                        specialNeeds.map((sn, index) => {
-                            return (
-                                <div key={index} class="col-md-6">
-                                    <Checkbox
-                                        label={sn.name}
-                                        style={{fontWeight: ''}}
-                                        onCheck={() => {this.handleCheckboxGroup(sn.id)}}
-                                    />
-                                </div>
-                            )})
-                        }
+                    <div>
+                        <MultipleCheckboxes specialNeeds={specialNeeds} values={this.state.specialNeeds || []} handleCheckboxGroup={this.handleCheckboxGroup}/>
                         <TextField  fullWidth={true} value={this.state.otherSpecialNeeds || ''} type="text" name="otherSpecialNeeds" onChange={this.handleChange} floatingLabelText="Outras necessidades especiais"/>
                     </div>
                 }

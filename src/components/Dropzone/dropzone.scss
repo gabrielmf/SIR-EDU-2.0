@@ -3,5 +3,25 @@
         i {
             color: #1e90ff;
         }
+
+        padding: 5px;
+    }
+    .dropzone-box {
+        width: 100%;
+        margin: auto;
+        border-width: 2px;
+        border-color: rgb(102, 102, 102); 
+        border-style: dashed;
+        border-radius: 5px;
+    }
+
+    .dropzone-box-active {
+        width: 100%;
+        margin: auto;
+        border-width: 2px;
+        border-color: rgb(102, 102, 102); 
+        border-style: solid;
+        border-radius: 5px;
+        background-color: rgb(238, 238, 238);
     }
 }
