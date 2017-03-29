@@ -51,10 +51,12 @@ const config = {
     'react-redux',
     'react-router',
     'redux',
+    'react-tinymce',
     'react-dropzone',
     'material-ui',
     'redux-api-middleware',
-    'react-addons-pure-render-mixin'
+    'react-addons-pure-render-mixin',
+    'react-slick'
   ],
 
   // ----------------------------------

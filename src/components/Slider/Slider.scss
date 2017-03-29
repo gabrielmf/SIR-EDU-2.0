@@ -1,0 +1,15 @@
+.slider-toolbar {
+    position: fixed;
+    right: 35px;
+    left: 35px;
+    bottom: 40px;
+    background: white;
+}
+
+.slick-next:before, .slick-prev:before {
+    color: dimgray;
+}
+
+.slider-border {
+    border: 1px solid;
+}

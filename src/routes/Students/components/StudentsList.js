@@ -5,6 +5,8 @@ import './StudentList.scss'
 export default class StudentList extends React.Component {
     constructor(props) {
 		super(props);
+		this.props.getStudentsList();
+		console.log(this.props)
 		this.searchStudent = this.searchStudent.bind(this);
 	}
 	
@@ -31,7 +33,7 @@ export default class StudentList extends React.Component {
 								<input type="text"  ref={(input) => { this.textInput = input; }} class="form-control input-lg" placeholder="Procurar aluno"/>
 								<div class="input-group-btn">
 									<button class="btn btn-primary input-lg" type="submit">
-										Pesquisar <i class="glyphicon glyphicon-search"></i>
+										<i class="glyphicon glyphicon-search"></i>
 									</button>
 								</div>
 							</div>

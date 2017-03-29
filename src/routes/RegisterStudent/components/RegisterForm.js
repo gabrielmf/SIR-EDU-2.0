@@ -1,15 +1,8 @@
 import React from 'react'
-import { TextField, SelectField, MenuItem, DatePicker, Checkbox } from 'material-ui';
+import { TextField, SelectField, MenuItem, DatePicker, Checkbox, RaisedButton } from 'material-ui'
 import Dropzone from 'components/Dropzone'
-import MultipleCheckboxes from './MultipleCheckboxes';
-
-const dropzoneStyle = {
-    maxWidth: '50%',
-    border:'width: 2px',
-    borderColor: 'rgb(102, 102, 102)',
-    borderStyle: 'dashed',
-    borderRadius: '5px'
-}
+import MultipleCheckboxes from './MultipleCheckboxes'
+import TermOfUse from './TermOfUse'
 
 const specialNeeds = [{name: 'Altas Habilidades/Superdotado'},
     {name: 'Deficiência Visual/Cegueira'},
@@ -32,20 +25,17 @@ const specialNeeds = [{name: 'Altas Habilidades/Superdotado'},
 export default class RegisterForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            file: null
-        };
+        this.state = {};
         this.onImageDrop = this.onImageDrop.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCheckboxGroup = this.handleCheckboxGroup.bind(this);
-        this.handleEditorChange = this.handleEditorChange.bind(this);
+        this.showTermOfUse = this.showTermOfUse.bind(this);
+        this.openTermOfUse = false;
     }
 
-    onImageDrop(files) {
-        console.log('Arquivo enviado com sucesso');
-        console.log(files)
-        this.setState({ file: files });
+    onImageDrop(field, file) {
+        this.setState({ [field]: file });
     }
 
     handleChange(event, id, valueParam) {
@@ -61,11 +51,15 @@ export default class RegisterForm extends React.Component {
         }
         
         this.setState({ [name]: value });
-
-        console.log(this.state)
     }
     
-    handleSelectChange = (event, index, values, stateProp) => {console.log('event', stateProp); this.setState({[stateProp] : values});}
+    handleCheckbox = (event, value) => { 
+        this.setState({ [event.target.name]: value }); 
+    }
+
+    handleSelectChange = (event, index, values, stateProp) => { 
+        this.setState({[stateProp] : values}); 
+    }
 
     handleCheckboxGroup(value) {
         let newSelectionArray;
@@ -77,7 +71,6 @@ export default class RegisterForm extends React.Component {
         }
 
         this.setState({ specialNeeds: newSelectionArray });
-        console.log(this.state);
     }
 
     handleSubmit(evt) {
@@ -85,8 +78,8 @@ export default class RegisterForm extends React.Component {
         this.props.handleSubmit(this.state);
     }
 
-    handleEditorChange(evt) {
-        console.log("editor")
+    showTermOfUse() {
+        this.openTermOfUse = true;
     }
 
     render() {
@@ -100,14 +93,15 @@ export default class RegisterForm extends React.Component {
                                 <Dropzone
                                     multiple={false}
                                     accept={"image/*"}
+                                    name="avatar"
                                     onDrop={this.onImageDrop}
-                                    initConfig={this.state.file}
+                                    initConfig={this.state.avatar}
                                     text={"Arraste e solte uma imagem ou clique no botão para selecionar um arquivo"}>
                                 </Dropzone>
                             </span>
                         </div>
                         <div class="col-md-6">
-                            <TextField class="col-md-6" fullWidth={true} value={this.state.name || ''} type="text" name="name" onChange={this.handleChange} floatingLabelText="Nome"/>
+                            <TextField required class="col-md-6" fullWidth={true} value={this.state.name || ''} type="text" name="name" onChange={this.handleChange} floatingLabelText="Nome"/>
                             <TextField class="col-md-6" fullWidth={true} value={this.state.registration || ''} type="number" name="registration" onChange={this.handleChange}  floatingLabelText="Matrícula"/>
                             <TextField class="col-md-6" fullWidth={true} value={this.state.classNumber || ''} type="number" name="classNumber" onChange={this.handleChange} floatingLabelText="Turma"/>
                             <TextField class="col-md-6" fullWidth={true} value={this.state.shift || ''} type="text" name="shift" onChange={this.handleChange} floatingLabelText="Turno"/>
@@ -142,6 +136,32 @@ export default class RegisterForm extends React.Component {
                     <div>
                         <MultipleCheckboxes specialNeeds={specialNeeds} values={this.state.specialNeeds || []} handleCheckboxGroup={this.handleCheckboxGroup}/>
                         <TextField  fullWidth={true} value={this.state.otherSpecialNeeds || ''} type="text" name="otherSpecialNeeds" onChange={this.handleChange} floatingLabelText="Outras necessidades especiais"/>
+                    </div>
+                }
+                {this.props.step === 3 &&
+                    <div class="col-md-12">
+                        <div>
+                            <label>Inserir documento com aprovação dos pais:</label>
+                            <span class="text-center">
+                                <Dropzone
+                                    required
+                                    multiple={false}
+                                    name="docParentsAproval"
+                                    onDrop={this.onImageDrop}
+                                    initConfig={this.state.docParentsAproval}
+                                    text={"Arraste e solte um documento ou clique no botão para selecionar um arquivo"}>
+                                </Dropzone>
+                            </span>
+                        </div>
+                        <div style={{marginTop: 20}}>
+                            <Checkbox required style={{width: 290, float: 'left', marginTop: 5}} 
+                                label="Você concorda com o termo de uso?" name="termOfUse" 
+                                checked={this.state.termOfUse || false} 
+                                onCheck={this.handleCheckbox}
+                            />
+                            <TermOfUse/>
+                            <RaisedButton label="Cadastrar" primary={true} type="submit"/>
+                        </div>
                     </div>
                 }
                 <div class="col-md-12">

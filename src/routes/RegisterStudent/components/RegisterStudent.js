@@ -20,21 +20,21 @@ export default class RegisterStudent extends React.Component {
     }
 
     handleNext = () => {
-    const {stepIndex} = this.state;
-    if (stepIndex < 2) {
-      this.setState({stepIndex: stepIndex + 1});
-    }
-  };
+        const {stepIndex} = this.state;
+        if (stepIndex < 3) {
+        this.setState({stepIndex: stepIndex + 1});
+        }
+    };
 
-  handlePrev = () => {
-    const {stepIndex} = this.state;
-    if (stepIndex > 0) {
-      this.setState({stepIndex: stepIndex - 1});
-    }
-  };
+    handlePrev = () => {
+        const {stepIndex} = this.state;
+        if (stepIndex > 0) {
+            this.setState({stepIndex: stepIndex - 1});
+        }
+    };
 
     render() {
-        const {stepIndex} = this.state;
+        const { stepIndex } = this.state;
         const contentStyle = {margin: '0 16px'};
 
         return (
@@ -44,22 +44,22 @@ export default class RegisterStudent extends React.Component {
                     <Stepper linear={false} activeStep={stepIndex}>
                         <Step>
                             <StepButton onClick={() => this.setState({stepIndex: 0})}>
-                            Preencha os dados do aluno
+                                Preencha os dados do aluno
                             </StepButton>
                         </Step>
                         <Step>
                             <StepButton onClick={() => this.setState({stepIndex: 1})}>
-                            Atividades Extraclasse
+                                Atividades Extraclasse
                             </StepButton>
                         </Step>
                         <Step>
                             <StepButton onClick={() => this.setState({stepIndex: 2})}>
-                            Necessidades Educacionais Especiais
+                                Necessidades Educacionais Especiais
                             </StepButton>
                         </Step>
                          <Step>
-                            <StepButton onClick={() => this.setState({stepIndex: 2})}>
-                            Finalizar
+                            <StepButton onClick={() => this.setState({stepIndex: 3})}>
+                                Finalizar
                             </StepButton>
                         </Step>
                         </Stepper>
@@ -70,16 +70,16 @@ export default class RegisterStudent extends React.Component {
                         <div class="col-md-12 text-center">
                             <div class="stepper-pagination">
                                 <FlatButton
-                                label="Back"
-                                disabled={stepIndex === 0}
-                                onTouchTap={this.handlePrev}
-                                style={{marginRight: 12}}
+                                    label="Voltar"
+                                    disabled={stepIndex === 0}
+                                    onTouchTap={this.handlePrev}
+                                    style={{marginRight: 12}}
                                 />
                                 <RaisedButton
-                                label="Next"
-                                disabled={stepIndex === 2}
-                                primary={true}
-                                onTouchTap={this.handleNext}
+                                    label="Próximo"
+                                    disabled={stepIndex === 3}
+                                    primary={true}
+                                    onTouchTap={this.handleNext}
                                 />
                             </div>
                         </div>

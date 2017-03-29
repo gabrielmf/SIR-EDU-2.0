@@ -8,7 +8,7 @@ let StudentSchema = new Schema({
   fatherName: { type: String },
   motherName: { type: String },
   birthDate: { type: Date},
-  // image: { path: String, contentType: String }, //Link to student image
+  avatar: { path: String, mimeType: String }, //Link to student image
   responsible: { type: String},
   relationship: { type: String},
   address: { type: String},
@@ -16,7 +16,7 @@ let StudentSchema = new Schema({
   // historical: { type: String},
   // active: { type: Boolean },
   // specialNeeds: [{ type: String }],
-  // docParentsAproval: { type: String}, //Link to doc file
+  docParentsAproval: { path: String, mimeType: String }, //Link to doc file
   // termOfUse: { type: Boolean },
   // _createdBy: { type: Number, ref: 'User' }, //Link to teacher model
   // _schoolId: { type: String} //Link to school model

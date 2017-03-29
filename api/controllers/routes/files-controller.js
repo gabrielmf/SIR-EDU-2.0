@@ -13,7 +13,7 @@ mongoose.connection.once('open', function() {
   gfs = new Gridfs(mongoose.connection.db, mongoose.mongo);
 })
 
-router.use(checkPermissionsMiddleware);
+// router.use(checkPermissionsMiddleware);
 
 router.post('/upload/:studentId', upload.any(), function(req, res, next){
     let file = req.files[0];

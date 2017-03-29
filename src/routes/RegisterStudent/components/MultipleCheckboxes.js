@@ -1,26 +1,32 @@
 import React from 'react'
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Checkbox } from 'material-ui';
 
 export default class MultipleCheckboxes extends React.Component {
     constructor(props) {
         super(props);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+        this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
+    }
+
+    shouldComponentUpdate(nextProps) {
+        if(nextProps.values.length !== this.props.values.length) {
+            return true;
+        } else {
+            return nextProps.values.length && nextProps.values.every((v,i)=> v !== this.props.values[i]);
+        }
     }
 
     render = () => {
-        console.log('a')
         return (
         <div>{this.props.specialNeeds.map((sn, index) => {
                 return (
                     <div key={index} class="col-md-6">
                         <Checkbox
                             label={sn.name}
-                            checked={this.props.values.indexOf(sn.name) > -1}
+                            defaultChecked={this.props.values.indexOf(sn.name) > -1}
                             onCheck={() => {this.props.handleCheckboxGroup(sn.name)}}
                         />
                     </div>
-                )})}}
+                )})}
         </div>);
     }
 }

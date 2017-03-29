@@ -5,7 +5,7 @@ let Service = require('../../models/services/student-service');
 let studentService = new Service();
 let fs = require('fs');
 let multer = require('multer');
-let upload = multer({ dest: 'uploads/avatar/' });
+let upload = multer({ dest: 'uploads/' });
 let checkPermissionsMiddleware = require('../../middlewares/check-permissions');
 
 //router.use(checkPermissionsMiddleware);
@@ -17,10 +17,15 @@ router.post('/students', upload.any(), function(req, res, next) {
     Object.assign(newStudent, req.body);
 
     if(req.files.length > 0) {
-        let file = req.files[0];
-        newStudent['image.path'] = file.path;
-        newStudent['image.contentType'] = file.mimetype;
+        req.files.forEach((file) => {
+             newStudent[file.fieldname] = {
+                 path: file.path,
+                 mimeType: file.mimetype
+             }
+        });
     }
+
+    console.log('data', newStudent)
     studentService.save(newStudent)
         .then((data) => {
             res.json(data);
