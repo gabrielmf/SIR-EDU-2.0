@@ -19,17 +19,20 @@ class AuthenticationService {
 	authenticate(user) {
 		return this.userService.findOne({ email : user.email })
 			.then((userFound) => {
+				if(!userFound) {
+					throw new Error(404);
+				}
 				return userFound.comparePassword(user.password)
-				.then((isMatch) => {
-					if(isMatch){
-						return this._createToken(userFound);
-					}
-					else{
-						//TODO Config file for error messages in portuguese
-						throw new Error('O usuário não foi encontrado ou a senha informada esta incorreta.');
-					}
-				})
-				.catch((err) => { throw err; });
+					.then((isMatch) => {
+						if(isMatch){
+							return this._createToken(userFound);
+						}
+						else{
+							//TODO Config file for error messages in portuguese
+							throw new Error('O usuário não foi encontrado ou a senha informada esta incorreta.');
+						}
+					})
+					.catch((err) => { throw err; });
 			})
 			.catch((err) => {
 				throw err;

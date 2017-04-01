@@ -13,12 +13,11 @@ let StudentSchema = new Schema({
   relationship: { type: String},
   address: { type: String},
   cid: { type: Number},
-  // historical: { type: String},
-  // active: { type: Boolean },
-  // specialNeeds: [{ type: String }],
+  historical: { type: String},
+  specialNeeds: [{ type: String }],
   docParentsAproval: { path: String, mimeType: String }, //Link to doc file
-  // termOfUse: { type: Boolean },
-  // _createdBy: { type: Number, ref: 'User' }, //Link to teacher model
+  termOfUse: { type: Boolean },
+  _createdBy: { type: Number, ref: 'User' }, //Link to teacher model
   // _schoolId: { type: String} //Link to school model
  });
 

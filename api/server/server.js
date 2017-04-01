@@ -39,7 +39,6 @@ app.use('/api', routes);
 // Apply Webpack HMR Middleware
 // ------------------------------------
 if (project.env === 'development') {
-  console.log('aqui');
   const compiler = webpack(webpackConfig)
 
   debug('Enabling webpack dev and HMR middleware')

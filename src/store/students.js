@@ -1,5 +1,7 @@
 import { BASE_URL } from 'constants/configConstants'
 import { CALL_API } from 'redux-api-middleware'
+import studentService from 'services/student-service'
+
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -42,28 +44,35 @@ export function saveStudentError(message) {
 }
 
 export function saveStudent(student) {
-  let data = new FormData();
-  Object.keys(student).forEach((key)=>{ data.append(key, student[key]) });
-  return {
-    [CALL_API]: {
-      endpoint: BASE_URL + '/students',
-      method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: data,
-      types: [save(student), SAVE_STUDENT_SUCCESS, SAVE_STUDENT_FAILURE]
-    }
-  };
+  let newStudent = new FormData();
+  Object.keys(student).forEach((key)=>{ newStudent.append(key, student[key]) });
+  return dispatch => {
+    return studentService.saveStudent(newStudent).then((data) => {
+        console.log('ai como é bom ser vida loca')
+    }).catch((error) => {
+        console.log('errrrro miseravi')
+    })
+  } 
+  // return {
+  //   [CALL_API]: {
+  //     endpoint: BASE_URL + '/students',
+  //     method: 'POST',
+  //     headers: { 'Accept': 'application/json' },
+  //     body: data,
+  //     types: [save(student), SAVE_STUDENT_SUCCESS, SAVE_STUDENT_FAILURE]
+  //   }
+  // };
 }
 
 export function getStudentsList() {
-  return {
-    [CALL_API]: {
-      endpoint: BASE_URL + '/students',
-      method: 'GET',
-      headers: { 'Accept': 'application/json' },
-      types: [GET_STUDENTS_LIST_REQUEST, GET_STUDENTS_LIST_SUCCESS, GET_STUDENTS_LIST_FAILURE]
+    return dispatch => {
+        return studentService.getStudents().then((res) => {
+          console.log("aehooo")
+        })
+        .catch(() => {
+          console.log('erroooooo')
+        });
     }
-  }
 }
 
 export const actions = {

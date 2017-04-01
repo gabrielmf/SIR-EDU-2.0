@@ -1,5 +1,6 @@
 import React from 'react';
 import './LoginView.scss';
+import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -30,6 +31,7 @@ export default class Login extends React.Component {
     render() {
        return (
           <section class="login-container">
+            <LoadingSpinner loading={this.props.auth.isFetching}/>
             <section class="login-form">
               <form name="loginForm" role="login" onSubmit={this.handleSubmit}>
                 <section>

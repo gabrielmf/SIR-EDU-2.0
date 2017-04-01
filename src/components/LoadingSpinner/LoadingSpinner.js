@@ -12,17 +12,19 @@ const spinnerOverlay = {
     left: 0
 };
 
-const LoadingSpinner = () => (
-    <div>
-        <div style={spinnerOverlay}/>
-        <RefreshIndicator
-            size={60}
-            left={-20}
-            top={10}
-            status={'loading'}
-            style={{position:'fixed', zIndex: 1000, marginTop: '20%',marginLeft: '50%'}}
-        />
-    </div>
-);
+const LoadingSpinner = (props) => {
+    return (
+        props.loading ? <div>
+            <div style={spinnerOverlay}/>
+            <RefreshIndicator
+                size={60}
+                left={-20}
+                top={10}
+                status={'loading'}
+                style={{position:'fixed', zIndex: 1000, marginTop: '20%',marginLeft: '50%'}}
+            />
+        </div> : null
+     );
+};
 
 export default LoadingSpinner;

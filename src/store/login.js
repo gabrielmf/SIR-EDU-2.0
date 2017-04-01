@@ -11,37 +11,34 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function requestLogin(creds) {
+export function requestLogin() {
   return {
     type: LOGIN_REQUEST,
     payload: {
         isFetching: true,
-        isAuthenticated: false,
-        creds 
+        isAuthenticated: false 
     }
   }
 }
 
 export function receiveLogin(user) {
-  routerHelper.goToStudentsPage();
-
   return {
     type: LOGIN_SUCCESS,
     payload: {
         isFetching: false,
         isAuthenticated: true,
-        id_token: user.id_token
+        token: user.id_token
     }
   }
 }
 
-export function loginError(message) {
+export function loginError(errorMessage) {
   return {
     type: LOGIN_FAILURE,
     payload: {
         isFetching: false,
         isAuthenticated: false,
-        message
+        errorMessage
     }
   }
 }
@@ -51,7 +48,6 @@ export function login(creds) {
   return dispatch => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
-
     return loginUser(creds).then((res) => {
         dispatch(receiveLogin(res));
     })
@@ -72,7 +68,8 @@ export const actions = {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [LOGIN_REQUEST] : (state, action) => ({...state, ...action.payload}),
-  [LOGIN_FAILURE] : (state, action) => state
+  [LOGIN_SUCCESS] : (state, action) => { routerHelper.goToStudentsPage(); return {...state, ...action.payload}},
+  [LOGIN_FAILURE] : (state, action) => ({...state, ...action.payload})
 }
 
 // ------------------------------------

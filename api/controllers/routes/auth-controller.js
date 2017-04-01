@@ -20,6 +20,7 @@ router.post('/register', function(req, res, next) {
 });
 
 router.post('/authenticate', function(req, res, next) {
+    console.log(req.body);
     authenticationService.authenticate(req.body)
     .then((token) => {
         // return the information including token as JSON
@@ -27,7 +28,7 @@ router.post('/authenticate', function(req, res, next) {
           success: true,
           token: token
         });
-        next();
+        res.end()
     })
     .catch((err) => {
         //TODO middleware to handle errors
