@@ -1,6 +1,5 @@
-import { BASE_URL } from 'constants/configConstants'
-import { CALL_API } from 'redux-api-middleware'
 import studentService from 'services/student-service'
+import router from 'helpers/router-helper';
 
 // ------------------------------------
 // Constants
@@ -44,24 +43,14 @@ export function saveStudentError(message) {
 }
 
 export function saveStudent(student) {
-  let newStudent = new FormData();
-  Object.keys(student).forEach((key)=>{ newStudent.append(key, student[key]) });
   return dispatch => {
-    return studentService.saveStudent(newStudent).then((data) => {
-        console.log('ai como é bom ser vida loca')
+    return studentService.saveStudent(student).then((data) => {
+        console.log('salvando aluno', data)
+        router.goToStudentsPage();
     }).catch((error) => {
         console.log('errrrro miseravi')
     })
   } 
-  // return {
-  //   [CALL_API]: {
-  //     endpoint: BASE_URL + '/students',
-  //     method: 'POST',
-  //     headers: { 'Accept': 'application/json' },
-  //     body: data,
-  //     types: [save(student), SAVE_STUDENT_SUCCESS, SAVE_STUDENT_FAILURE]
-  //   }
-  // };
 }
 
 export function getStudentsList() {

@@ -6,6 +6,15 @@ export default class studentService {
     }
 
     static saveStudent(student) {
-        return axios.post('students', student);
+        let newStudent = new FormData();
+        Object.keys(student).forEach((key)=>{
+            if(student[key].constructor !== Array) {
+                newStudent.append(key, student[key]);
+            }
+            else {
+                newStudent.append(key, JSON.stringify(student[key]));
+            }
+        });
+        return axios.post('students', newStudent);
     }
 }

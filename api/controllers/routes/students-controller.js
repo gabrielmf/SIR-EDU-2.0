@@ -15,6 +15,9 @@ router.post('/students', upload.any(), function(req, res, next) {
     let newStudent = {};
 
     Object.assign(newStudent, req.body);
+    if(req.body.specialNeeds) {
+        newStudent.specialNeeds = JSON.parse(req.body.specialNeeds);
+    }
 
     if(req.files.length > 0) {
         req.files.forEach((file) => {
@@ -24,8 +27,7 @@ router.post('/students', upload.any(), function(req, res, next) {
              }
         });
     }
-
-    console.log('data', newStudent)
+    
     studentService.save(newStudent)
         .then((data) => {
             res.json(data);

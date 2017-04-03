@@ -1,5 +1,5 @@
 import loginUser from 'helpers/auth-helper'
-import routerHelper from 'helpers/router-helper'
+import router from 'helpers/router-helper'
 
 // ------------------------------------
 // Constants
@@ -27,7 +27,7 @@ export function receiveLogin(user) {
     payload: {
         isFetching: false,
         isAuthenticated: true,
-        token: user.id_token
+        token: user.token
     }
   }
 }
@@ -50,8 +50,10 @@ export function login(creds) {
     dispatch(requestLogin(creds))
     return loginUser(creds).then((res) => {
         dispatch(receiveLogin(res));
+        router.goToStudentsPage();
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err)
       dispatch(loginError('Error'));
     });
   }
@@ -68,7 +70,7 @@ export const actions = {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [LOGIN_REQUEST] : (state, action) => ({...state, ...action.payload}),
-  [LOGIN_SUCCESS] : (state, action) => { routerHelper.goToStudentsPage(); return {...state, ...action.payload}},
+  [LOGIN_SUCCESS] : (state, action) => ({...state, ...action.payload}),
   [LOGIN_FAILURE] : (state, action) => ({...state, ...action.payload})
 }
 
