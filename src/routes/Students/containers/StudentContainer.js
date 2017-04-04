@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import StudentsList from '../components/StudentsList'
+import StudentListTable from '../components/StudentListTable'
 import { getStudentsList } from 'store/students'
 
 const mapDispatchToProps = {
@@ -11,4 +11,4 @@ const mapStateToProps = (state) => ({
     students: state.students
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(StudentsList)
+export default connect(mapStateToProps, mapDispatchToProps)(StudentListTable)
