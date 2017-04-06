@@ -7,14 +7,20 @@ const LOADING_STOP = 'LOADING_STOP'
 export function loadingStart() {
     return {
       type: LOADING_START,
-
+      payload: true
     }
 }
 
+export function loadingStop() {
+    return {
+      type: LOADING_STOP,
+      payload: false
+    }
+}
 
-const ACTION_HANDLERS = {
-  [LOADING_START] : () => { console.log('aqui'); return true},
-  [LOADING_STOP] : () => false
+const actions = {
+    LOADING_START,
+    LOADING_STOP
 }
 
 // ------------------------------------
@@ -23,7 +29,5 @@ const ACTION_HANDLERS = {
 const initialState = false;
 
 export default function loadingReducer (state = initialState, action) {
-  const handler = ACTION_HANDLERS[action.type]
-
-  return handler ? handler() : state
+  return actions[action.type] ? action.payload : state;
 }

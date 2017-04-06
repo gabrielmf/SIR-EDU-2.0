@@ -4,83 +4,44 @@ import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow,
 import { Avatar, TextField } from 'material-ui';
 import './StudentList.scss';
 
-const tableData = [
-  {
-    name: 'John Smith',
-    status: 'Employed',
-    selected: true,
-  },
-  {
-    name: 'Randal White',
-    status: 'Unemployed',
-  },
-  {
-    name: 'Stephanie Sanders',
-    status: 'Employed',
-    selected: true,
-  },
-  {
-    name: 'Steve Brown',
-    status: 'Employed',
-  },
-  {
-    name: 'Joyce Whitten',
-    status: 'Employed',
-  },
-  {
-    name: 'Samuel Roberts',
-    status: 'Employed',
-  },
-  {
-    name: 'Adam Moore',
-    status: 'Employed',
-  },
-    {
-    name: 'Steve Brown',
-    status: 'Employed',
-  },
-  {
-    name: 'Joyce Whitten',
-    status: 'Employed',
-  },
-  {
-    name: 'Samuel Roberts',
-    status: 'Employed',
-  },
-  {
-    name: 'Adam Moore',
-    status: 'Employed',
-  },
-    {
-    name: 'Steve Brown',
-    status: 'Employed',
-  },
-  {
-    name: 'Joyce Whitten',
-    status: 'Employed',
-  },
-  {
-    name: 'Samuel Roberts',
-    status: 'Employed',
-  },
-  {
-    name: 'Adam Moore',
-    status: 'Employed',
-  }
-];
-
 export default class StudentListTable extends React.Component {
 
   constructor(props) {
     super(props);
-  }
+    this.state = {
+      filteredStudents: this.props.students.list || []
+    };
+    if(!this.props.students.list.length) {
+      this.props.getStudentsList();
+    }
+		this.searchStudent = this.searchStudent.bind(this);
+	}
+	
+	searchStudent(e) {
+		e.preventDefault();
+		console.log(this.textInput.value);
+    console.log(this.state.filteredStudents)
+	}
 
   render() {
     return (
-      <div class="container">
-        <Table
-          selectable={false}
-        >
+      <div class="container student-list">
+        <div class="col-md-6 col-md-offset-3">
+					<div class="search-student">
+						<form onSubmit={this.searchStudent}>
+							<div class="input-group">
+								<input type="text"  ref={(input) => { this.textInput = input; }} class="form-control input-lg" placeholder="Procurar aluno"/>
+								<div class="input-group-btn">
+									<button class="btn btn-primary input-lg" type="submit">
+										<i class="glyphicon glyphicon-search"></i>
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+        <div class="col-md-10 col-md-offset-1">
+          <Table selectable={false}>
           <TableHeader
             displaySelectAll={false}
             adjustForCheckbox={false}
@@ -103,14 +64,14 @@ export default class StudentListTable extends React.Component {
             displayRowCheckbox={false}
             deselectOnClickaway={true}
           >
-            {tableData.map( (row, index) => (
-              <TableRow key={index} selected={row.selected}>
+            {this.props.students.list.map( (student, index) => (
+              <TableRow key={index}>
                 <TableRowColumn>
-                    <Avatar class="pull-left" size={45}/>
+                    {student.avatar ? <Avatar src={'' + student.avatar.path} class="pull-left" size={45}/> : null}
                 </TableRowColumn>
-                <TableRowColumn><a>{row.name}</a></TableRowColumn>
-                <TableRowColumn>{row.status}</TableRowColumn>
-                <TableRowColumn>{row.name}</TableRowColumn>
+                <TableRowColumn><a>{student.name}</a></TableRowColumn>
+                <TableRowColumn>Escola</TableRowColumn>
+                <TableRowColumn>Turma</TableRowColumn>
                 <TableRowColumn>
                     <span class="edit-student">
                         <i class="fa fa-pencil-square-o fa-lg"
@@ -123,6 +84,6 @@ export default class StudentListTable extends React.Component {
               </TableRow>
               ))}
           </TableBody>
-        </Table>
+        </Table></div>
         </div>);
     }}

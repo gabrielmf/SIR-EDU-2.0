@@ -34,6 +34,7 @@ app.use(bodyParser.json({limit: '50mb'}));
 // use morgan to log requests to the console
 app.use(morgan('dev'));
 app.use('/api', routes);
+app.use('/uploads', express.static(rootDir + '/uploads'));
 
 // ------------------------------------
 // Apply Webpack HMR Middleware

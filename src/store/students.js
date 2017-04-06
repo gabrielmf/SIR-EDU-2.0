@@ -1,5 +1,6 @@
 import studentService from 'services/student-service'
 import router from 'helpers/router-helper';
+import { loadingStart, loadingStop } from './loading'
 
 // ------------------------------------
 // Constants
@@ -18,9 +19,6 @@ export function save(student) {
     type:  SAVE_STUDENT_REQUEST,
     payload: {
         isFetching: true,
-    },
-    meta: {
-      student
     }
   }
 }
@@ -53,12 +51,36 @@ export function saveStudent(student) {
   } 
 }
 
+export function getStudentListRequest() {
+  return {
+    type:  GET_STUDENTS_LIST_REQUEST,
+    payload: {
+        isFetching: true,
+    }
+  }
+}
+
+export function getStudentListSuccess(list) {
+  return {
+    type:  GET_STUDENTS_LIST_SUCCESS,
+    payload: {
+        isFetching: false,
+        list
+    }
+  }
+}
+
 export function getStudentsList() {
     return dispatch => {
+        dispatch(loadingStart());
+        dispatch(getStudentListRequest())
         return studentService.getStudents().then((res) => {
-          console.log("aehooo")
+          dispatch(loadingStop());
+          console.log('get', res.data);
+          dispatch(getStudentListSuccess(res.data));
         })
         .catch(() => {
+          dispatch(loadingStop());
           console.log('erroooooo')
         });
     }
@@ -76,7 +98,10 @@ export const actions = {
 const ACTION_HANDLERS = {
   [SAVE_STUDENT_REQUEST] : (state, action) => ({ ...state, ...action.payload }),
   [SAVE_STUDENT_SUCCESS] : (state, action) => ({ ...state, isFetching: false, list: [...state.list, action.payload] }),
-  [SAVE_STUDENT_FAILURE] : (state, action) => state
+  [SAVE_STUDENT_FAILURE] : (state, action) => state,
+  [GET_STUDENTS_LIST_REQUEST] : (state, action) => state,
+  [GET_STUDENTS_LIST_SUCCESS] : (state, action) => ({ ...action.payload }),
+  [GET_STUDENTS_LIST_FAILURE] : (state, action) => state
 }
 
 // ------------------------------------

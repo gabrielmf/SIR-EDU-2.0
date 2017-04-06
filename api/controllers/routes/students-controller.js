@@ -1,18 +1,31 @@
 'use strict';
 
-let router = require('express').Router();
-let Service = require('../../models/services/student-service');
-let studentService = new Service();
-let fs = require('fs');
-let multer = require('multer');
-let upload = multer({ dest: 'uploads/' });
-let checkPermissionsMiddleware = require('../../middlewares/check-permissions');
-
+const router = require('express').Router();
+const Service = require('../../models/services/student-service');
+const crypto = require('crypto');
+const studentService = new Service();
+const fs = require('fs');
+const mime = require('mime');
+const multer = require('multer');
+const checkPermissionsMiddleware = require('../../middlewares/check-permissions');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/')
+  },
+  filename: function (req, file, cb) {
+    crypto.pseudoRandomBytes(16, function (err, raw) {
+      cb(null, raw.toString('hex') + Date.now() + '.' + mime.extension(file.mimetype));
+    });
+  }
+});
+let upload = multer({ storage: storage });
 //router.use(checkPermissionsMiddleware);
 
 //TODO 1 - middleware to check user permissions, 2- treat errors with some middleware
 router.post('/students', upload.any(), function(req, res, next) {
     let newStudent = {};
+
+    console.log(req.files);
 
     Object.assign(newStudent, req.body);
     if(req.body.specialNeeds) {
