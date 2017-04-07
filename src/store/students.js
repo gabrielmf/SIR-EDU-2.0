@@ -11,6 +11,7 @@ export const SAVE_STUDENT_FAILURE = 'SAVE_STUDENT_FAILURE'
 export const GET_STUDENTS_LIST_REQUEST = 'GET_STUDENTS_LIST_REQUEST'
 export const GET_STUDENTS_LIST_SUCCESS = 'GET_STUDENTS_LIST_SUCCESS'
 export const GET_STUDENTS_LIST_FAILURE = 'GET_STUDENTS_LIST_FAILURE'
+const FILTER_STUDENTS = 'FILTER_STUDENTS'
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -79,10 +80,19 @@ export function getStudentsList() {
           console.log('get', res.data);
           dispatch(getStudentListSuccess(res.data));
         })
-        .catch(() => {
+        .catch((err) => {
           dispatch(loadingStop());
-          console.log('erroooooo')
+          console.log('erroooooo', err)
         });
+    }
+}
+
+export function filterStudents(filterText) {
+    return {
+      type:  FILTER_STUDENTS,
+      payload: {
+          filterText
+      }
     }
 }
 
@@ -101,13 +111,14 @@ const ACTION_HANDLERS = {
   [SAVE_STUDENT_FAILURE] : (state, action) => state,
   [GET_STUDENTS_LIST_REQUEST] : (state, action) => state,
   [GET_STUDENTS_LIST_SUCCESS] : (state, action) => ({ ...action.payload }),
-  [GET_STUDENTS_LIST_FAILURE] : (state, action) => state
+  [GET_STUDENTS_LIST_FAILURE] : (state, action) => state,
+  [FILTER_STUDENTS] : (state, action) => ({ ...state, ...action.payload })
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
-export default function studentsReducer (state = {list: []}, action) {
+export default function studentsReducer (state = {list: [], filterText: ''}, action) {
   const handler = ACTION_HANDLERS[action.type]
 
   return handler ? handler(state, action) : state

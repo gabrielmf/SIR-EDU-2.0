@@ -4,33 +4,48 @@ import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow,
 import { Avatar, TextField } from 'material-ui';
 import './StudentList.scss';
 
+const getFilteredStudents = (students, filterText) => {
+    return students.filter(student => {
+      if(student.name) {
+        const name = student.name.toLowerCase();
+        const filter = filterText.toLowerCase();
+        return name.includes(filter);
+      }
+    }
+  );
+}
+
 export default class StudentListTable extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      filteredStudents: this.props.students.list || []
-    };
-    if(!this.props.students.list.length) {
-      this.props.getStudentsList();
-    }
 		this.searchStudent = this.searchStudent.bind(this);
 	}
 	
 	searchStudent(e) {
-		e.preventDefault();
-		console.log(this.textInput.value);
-    console.log(this.state.filteredStudents)
+    e.preventDefault();
+		const { filterStudents } = this.props;
+		filterStudents(this.textInput.value);
 	}
 
+  componentDidMount() {
+    const { getStudentsList, students } = this.props;
+    if(!students.list.length) {
+      getStudentsList();
+    }
+  }
+
   render() {
+    const { students, filterText } = this.props;
+    const filteredStudents = getFilteredStudents(students.list, filterText);
+
     return (
       <div class="container student-list">
         <div class="col-md-6 col-md-offset-3">
 					<div class="search-student">
 						<form onSubmit={this.searchStudent}>
 							<div class="input-group">
-								<input type="text"  ref={(input) => { this.textInput = input; }} class="form-control input-lg" placeholder="Procurar aluno"/>
+								<input type="text"  ref={(input) => { this.textInput = input }} class="form-control input-lg" placeholder="Procurar aluno"/>
 								<div class="input-group-btn">
 									<button class="btn btn-primary input-lg" type="submit">
 										<i class="glyphicon glyphicon-search"></i>
@@ -64,7 +79,7 @@ export default class StudentListTable extends React.Component {
             displayRowCheckbox={false}
             deselectOnClickaway={true}
           >
-            {this.props.students.list.map( (student, index) => (
+            {filteredStudents.map( (student, index) => (
               <TableRow key={index}>
                 <TableRowColumn>
                     {student.avatar ? <Avatar src={'' + student.avatar.path} class="pull-left" size={45}/> : null}
