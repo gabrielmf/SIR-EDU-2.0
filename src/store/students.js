@@ -110,7 +110,7 @@ const ACTION_HANDLERS = {
   [SAVE_STUDENT_SUCCESS] : (state, action) => ({ ...state, isFetching: false, list: [...state.list, action.payload] }),
   [SAVE_STUDENT_FAILURE] : (state, action) => state,
   [GET_STUDENTS_LIST_REQUEST] : (state, action) => state,
-  [GET_STUDENTS_LIST_SUCCESS] : (state, action) => ({ ...action.payload }),
+  [GET_STUDENTS_LIST_SUCCESS] : (state, action) => ({ ...state, ...action.payload }),
   [GET_STUDENTS_LIST_FAILURE] : (state, action) => state,
   [FILTER_STUDENTS] : (state, action) => ({ ...state, ...action.payload })
 }

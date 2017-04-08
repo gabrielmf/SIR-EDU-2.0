@@ -1,0 +1,36 @@
+.menu-items {
+    margin: 15px 60px;
+}
+
+.menu-item {
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #fff;
+    display: block;
+
+    a {
+        color: inherit;
+
+        &:hover {
+            color: inherit;
+            text-decoration: none;
+        }
+    }
+
+    .icons-box {
+        box-sizing: border-box;
+        background-color: #89c236;
+        color: #fff;
+        margin: 10px auto;
+        border-radius: 50%;
+        padding: 28px 28px;
+        height: 100px;
+        width: 100px;
+    }
+
+    &:hover {
+        background:#fcfcfc;
+        border: 1px solid #f6f6f6;
+        cursor: pointer;
+    }
+}
