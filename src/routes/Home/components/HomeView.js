@@ -1,14 +1,13 @@
 import React from 'react'
-import DuckImage from '../assets/Duck.jpg'
+import logo from 'public/sir-edu_logo.png'
 import './HomeView.scss'
 
 export const HomeView = () => (
-  <div>
-    <h4>Welcome!</h4>
+  <div class="sir-home text-center">
     <img
-      alt='This is a duck, because Redux!'
-      className='duck'
-      src={DuckImage} />
+      className='logo'
+      src={logo} />
+      <h4 class="title">Sistema Integrado de Recursos - Educacional</h4>
   </div>
 )
 

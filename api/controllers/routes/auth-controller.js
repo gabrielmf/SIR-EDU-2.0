@@ -11,7 +11,6 @@ router.post('/register', function(req, res, next) {
     .then((data) => {
       //TODO review the information that needs to be returned
         res.json(data);
-        next();
       })
     .catch((err) => {
           console.log(err);
@@ -20,7 +19,6 @@ router.post('/register', function(req, res, next) {
 });
 
 router.post('/authenticate', function(req, res, next) {
-    console.log(req.body);
     authenticationService.authenticate(req.body)
     .then((token) => {
         // return the information including token as JSON
@@ -32,7 +30,9 @@ router.post('/authenticate', function(req, res, next) {
     })
     .catch((err) => {
         //TODO middleware to handle errors
-        next(err);
+        //next(err);
+        console.log(err)
+        res.status(500).send();
     })
 });
 

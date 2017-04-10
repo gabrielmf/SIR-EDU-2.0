@@ -5,7 +5,7 @@ let fs = require('fs');
 let mongoose = require('mongoose');
 let Gridfs = require('gridfs-stream');
 let multer = require('multer');
-let upload = multer({ dest: 'uploads/' })
+let upload = multer({ dest: 'files/' })
 let gfs;
 let checkPermissionsMiddleware = require('../../middlewares/check-permissions');
 

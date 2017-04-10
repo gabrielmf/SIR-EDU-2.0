@@ -49,6 +49,7 @@ export function login(creds) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
     return loginUser(creds).then((res) => {
+        console.log(res)
         dispatch(receiveLogin(res));
         router.goToStudentsPage();
     })

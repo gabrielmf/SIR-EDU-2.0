@@ -14,6 +14,14 @@ const preventDropOnDocument = () => {
     },false);
 }
 
+const getFilePreview = (file) => {
+    console.log(file);
+    if(file.type.includes('video')) {
+        return (<video src={file.preview} class="video-thumb" preload="metadata"/>);
+    }
+    return (<img src={file.preview} class="img-thumbnail" height="100" width="230"/>);
+} 
+
 export default class DropzoneComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -52,12 +60,14 @@ export default class DropzoneComponent extends React.Component {
                         {
                             this.file && 
                             <div>
-                                <img src={this.file.preview} class="img-thumbnail" height="100" width="230"/>
-                                <IconButton iconClassName="fa fa-times" 
+                                { getFilePreview(this.file) }
+                                <span>
+                                    <IconButton iconClassName="fa fa-times" 
                                     onTouchTap={this.removeFile}
                                     tooltip="Remover arquivo"
                                     tooltipPosition="bottom-right"
-                                />
+                                    />
+                                </span>
                             </div> ||
                             <div>
                                 <i class="fa fa-cloud-upload fa-5x" aria-hidden="true"></i>
