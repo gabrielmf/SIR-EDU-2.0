@@ -8,18 +8,19 @@ export const Header = () => (
     <nav className='navbar navbar-default'>
       <div className='container-fluid'>
         <div className='navbar-header'>
-          <a className='navbar-brand' href='#'><img id='header-logo' src={logo} /></a>
+          <div className='navbar-brand'>
+            <Link to="/"><img id='header-logo' src={logo}/></Link>
+          </div>
         </div>
         <div className='navbar-inner'>
           <ul className='nav navbar-nav'>
-            <li className='active'><a href='index.html'>Home</a></li>
-            <li><a href='about.html'>About</a></li>
-            <li><a href='services.html'>Services</a></li>
-            <li><a href='pricing.html'>Pricing</a></li>
-            <li><a href='contact.html'>Contact</a></li>
+            <li className='active'><Link to="/">Home</Link></li>
+            <li><a>Quem somos</a></li>
+            <li><a>Serviços</a></li>
+            <li><a>Contato</a></li>
           </ul>
           <ul className='nav navbar-nav navbar-right'>
-            <li><Link to='/cadastrar'><span className='glyphicon glyphicon-user' /> Cadastrar</Link></li>
+            <li><Link to='/cadastro'><span className='glyphicon glyphicon-user' /> Cadastrar</Link></li>
             <li><Link to='/login'><span className='glyphicon glyphicon-log-in' /> Entrar</Link></li>
           </ul>
         </div></div>

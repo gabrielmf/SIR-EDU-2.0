@@ -15,7 +15,7 @@ mongoose.connection.once('open', function() {
 
 // router.use(checkPermissionsMiddleware);
 
-router.post('/upload/:studentId', upload.any(), function(req, res, next){
+router.post('/files/:studentId', upload.any(), function(req, res, next){
     let file = req.files[0];
     let newFile = {
       _studentId: req.params.studentId
@@ -53,7 +53,7 @@ router.post('/upload/:studentId', upload.any(), function(req, res, next){
     });
 });
 
-router.get('/file/:id', function(req, res, next){
+router.get('/files/:id', function(req, res, next){
   let readstream = gfs.createReadStream({
     _id: req.params.id
   });
@@ -74,7 +74,7 @@ router.get('/files/:studentId', function(req, res, next){
     })
 });
 
-router.delete("/file/:id", function(req, res){
+router.delete("/files/:id", function(req, res){
   let params = {_id: req.params.id };
   gfs.exist(params, function(err, found){
     if(err) return res.send("Error occured");

@@ -2,6 +2,8 @@ import React from 'react';
 import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn}
   from 'material-ui/Table';
 import { Avatar, TextField } from 'material-ui';
+import { Link } from 'react-router'
+import defaultAvatar from 'public/default-avatar.png'
 import './StudentList.scss';
 
 const getFilteredStudents = (students, filterText) => {
@@ -82,9 +84,13 @@ export default class StudentListTable extends React.Component {
             {filteredStudents.map( (student, index) => (
               <TableRow key={index}>
                 <TableRowColumn>
-                    {student.avatar ? <Avatar src={'' + student.avatar.path} class="pull-left" size={45}/> : null}
+                    {
+                      student.avatar ?
+                      <Avatar src={student.avatar.path} class="student-avatar pull-left" size={45}/> :
+                      <Avatar src={defaultAvatar} class="student-avatar pull-left" size={45}/>
+                    }
                 </TableRowColumn>
-                <TableRowColumn><a>{student.name}</a></TableRowColumn>
+                <TableRowColumn><Link to={'aluno/'+student._id}>{student.name}</Link></TableRowColumn>
                 <TableRowColumn>Escola</TableRowColumn>
                 <TableRowColumn>Turma</TableRowColumn>
                 <TableRowColumn>

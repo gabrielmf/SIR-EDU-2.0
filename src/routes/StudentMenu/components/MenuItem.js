@@ -16,10 +16,12 @@ export const MenuItem = (props) => (
         </div>
         <div class="col-md-2">
             <div class="menu-item">
-                <div class="icons-box">
-                    <i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i>
-                </div>
-                <h4>Parecer</h4>
+                <Link to="/parecer">
+                    <div class="icons-box">
+                        <i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i>
+                    </div>
+                    <h4>Parecer</h4>
+                </Link>
             </div>
         </div>
         <div class="col-md-2">
