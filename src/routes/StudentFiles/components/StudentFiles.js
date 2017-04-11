@@ -10,9 +10,12 @@ class StudentFiles extends React.Component {
         this.state = {
             file: null,
             date: '',
-            comment: ''
+            comment: '',
+            _studentId: '58ec45e1fe53e60c5321ed8f'
         }
         this.onDropFile = this.onDropFile.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
+        this.handleSave = this.handleSave.bind(this);
     }
 
     onDropFile(file) {
@@ -24,7 +27,8 @@ class StudentFiles extends React.Component {
     }
 
     handleSave() {
-        console.log('save')
+        console.log('save', this.state);
+        // this.props.uploadFile(this.state);
     }
     
     render() {

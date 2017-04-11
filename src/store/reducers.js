@@ -3,13 +3,15 @@ import locationReducer from './location'
 import loginReducer from './login';
 import studentsReducer from './students'
 import loadingReducer from './loading'
+import filesReducer from './files'
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     location: locationReducer,
     auth: loginReducer,
     students: studentsReducer,
-    loading: loadingReducer, 
+    loading: loadingReducer,
+    filesReducer,
     ...asyncReducers
   })
 }

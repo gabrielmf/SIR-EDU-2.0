@@ -15,10 +15,10 @@ mongoose.connection.once('open', function() {
 
 // router.use(checkPermissionsMiddleware);
 
-router.post('/files/:studentId', upload.any(), function(req, res, next){
+router.post('/files', upload.any(), function(req, res, next){
     let file = req.files[0];
     let newFile = {
-      _studentId: req.params.studentId
+      _studentId: req.body._studentId
     };
 
     Object.assign(newFile, req.body);

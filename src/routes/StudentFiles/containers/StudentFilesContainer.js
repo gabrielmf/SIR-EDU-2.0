@@ -1,14 +1,14 @@
 import { connect } from 'react-redux'
 
 import StudentFiles from '../components/StudentFiles'
-import { getStudentsList, filterStudents } from 'store/students'
+import { uploadFile } from 'store/files'
 
 const mapDispatchToProps = {
-    getStudentsList
+    uploadFile
 }
 
 const mapStateToProps = (state) => ({
-    students: state.students
+    file: state.file
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentFiles)
