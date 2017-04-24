@@ -32,7 +32,7 @@ router.post('/authenticate', function(req, res, next) {
         //TODO middleware to handle errors
         //next(err);
         console.log(err)
-        res.status(500).send();
+        res.status(404).send({ error: 'Not found' })
     })
 });
 

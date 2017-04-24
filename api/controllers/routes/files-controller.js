@@ -17,11 +17,12 @@ mongoose.connection.once('open', function() {
 
 router.post('/files', upload.any(), function(req, res, next){
     let file = req.files[0];
+    
     let newFile = {
-      _studentId: req.body._studentId
+      _studentId: req.body.studentId,
+      date: req.body.date,
+      comment: req.body.comment
     };
-
-    Object.assign(newFile, req.body);
 
     let writestream = gfs.createWriteStream({
       filename: file.filename,
@@ -62,12 +63,11 @@ router.get('/files/:id', function(req, res, next){
 });
 
 //TODO reduce response size object
-router.get('/files/:studentId', function(req, res, next){
-    gfs.files.find({ 'metadata._studentId': req.params.studentId }).toArray()
+router.get('/files', function(req, res, next){
+    gfs.files.find({ 'metadata._studentId': req.query.studentId }).toArray()
     .then((files) => {
       console.log('Get all files for student', files);
       res.json(files);
-      next();
     }).catch((err) => {
       console.error(err);
       next(err);
