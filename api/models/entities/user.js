@@ -10,7 +10,10 @@ let UserSchema = new Schema({
   password: { type: String, required: true },
   role: { type: String, required: true },//number to reduce payload
   name: { type: String, required: true },
-  schoolId: { type: String }
+  phone: { type: Number },
+  adress: { type: String },
+  identificationNumber: { type: Number },
+  _school: { type: Number, ref: 'School' }
  });
 
 UserSchema.pre('save', function(next) {

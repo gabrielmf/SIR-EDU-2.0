@@ -11,6 +11,7 @@ const mongoose    = require('mongoose');
 const rootDir = path.resolve(__dirname, '../../');
 const webpackConfig = require(rootDir + '/config/webpack.config')
 const project = require(rootDir + '/config/project.config')
+const jwt = require('express-jwt');
 
 //needed because mongoose native promises is deprecated
 mongoose.Promise = Promise;
@@ -26,14 +27,30 @@ mongoose.connect(config.database, (err) => {
 /* App Middlewares */
 
 // Apply gzip compression
- app.use(compress())
+app.use(compress())
+
 // use body parser so we can get info from POST and/or URL parameters
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
 app.use(bodyParser.json({limit: '50mb'}));
 
 // use morgan to log requests to the console
 app.use(morgan('dev'));
-app.use('/api', routes);
+
+// TODO refresh token
+const jwtOptions = { secret: config.secret, ignoreExpiration: true, 
+  getToken: function fromHeaderOrQuerystring (req) {
+      if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+          return req.headers.authorization.split(' ')[1];
+      } else if (req.query && req.query.token) {
+        console.log(req);
+        return req.query.token;
+      }
+      return null;
+   } 
+};
+
+// App routes
+app.use('/api', jwt(jwtOptions).unless({path: [ '/api/authenticate' , '/api/register']}), routes);
 app.use('/uploads', express.static(rootDir + '/uploads'));
 
 // ------------------------------------

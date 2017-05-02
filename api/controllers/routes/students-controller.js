@@ -7,7 +7,7 @@ const studentService = new Service();
 const fs = require('fs');
 const mime = require('mime');
 const multer = require('multer');
-const checkPermissionsMiddleware = require('../../middlewares/check-permissions');
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     let stat = null;
@@ -28,15 +28,15 @@ const storage = multer.diskStorage({
     });
   }
 });
+
 let upload = multer({ storage: storage });
-//router.use(checkPermissionsMiddleware);
 
 //TODO 1 - middleware to check user permissions, 2- treat errors with some middleware
 router.post('/students', upload.any(), function(req, res, next) {
     let newStudent = {};
 
     Object.assign(newStudent, req.body);
-
+    
     if(newStudent.specialNeeds) {
         newStudent.specialNeeds = newStudent.specialNeeds.split(',');
     }
@@ -77,7 +77,6 @@ router.get('/students/:id', function(req, res, next) {
             res.json(data);
         })
         .catch((err) => {
-            //TODO middleware to handle errors
             next(err);
         })
 });
@@ -85,14 +84,15 @@ router.get('/students/:id', function(req, res, next) {
 router.delete('/students/:id', function(req, res, next) {
     studentService.delete(req.params.id)
     .then((studentRemoved) => {
-        console.log('deleted', studentRemoved);
-        fs.unlink(studentRemoved.image.path, (err) => {
-            if (err) {
-                throw(err);
-            }
-            console.log('unlink with success!')
-            res.end()
-        });
+        if(studentRemoved.image && studentRemoved.image.path) {
+            fs.unlink(studentRemoved.image.path, (err) => {
+                if (err) {
+                    throw(err);
+                }
+            });
+        }
+
+        res.json(studentRemoved);
     })
     .catch((err) => {
         console.error(err);

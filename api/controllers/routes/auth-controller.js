@@ -5,7 +5,6 @@ var AuthenticationService = require('../../application-services/authentication-s
 var authenticationService = new AuthenticationService();
 
 //TODO treat errors with some middleware
-
 router.post('/register', function(req, res, next) {
 	authenticationService.registerUser(req.body)
     .then((data) => {
@@ -20,18 +19,14 @@ router.post('/register', function(req, res, next) {
 
 router.post('/authenticate', function(req, res, next) {
     authenticationService.authenticate(req.body)
-    .then((token) => {
-        // return the information including token as JSON
+    .then((data) => {
         res.json({
           success: true,
-          token: token
+          token: data.token,
+          user: data.user
         });
-        res.end()
     })
     .catch((err) => {
-        //TODO middleware to handle errors
-        //next(err);
-        console.log(err)
         res.status(404).send({ error: 'Not found' })
     })
 });
