@@ -14,11 +14,12 @@ mongoose.connection.once('open', function() {
 
 router.post('/files', upload.any(), function(req, res, next){
     let file = req.files[0];
-    
+
     let newFile = {
       _studentId: req.body.studentId,
       date: req.body.date,
-      comment: req.body.comment
+      comment: req.body.comment,
+      keywords: req.body.keywords.split(',') || [] 
     };
 
     let writestream = gfs.createWriteStream({
@@ -48,7 +49,6 @@ router.post('/files', upload.any(), function(req, res, next){
 });
 
 router.get('/files/:id', function(req, res, next){
-  console.log('user', req.user);
   let readstream = gfs.createReadStream({
     _id: req.params.id
   });
