@@ -6,7 +6,7 @@ export const MenuItem = (props) => (
     <div class="row menu-items">
         <div class="col-md-2">
             <div class="menu-item">
-                <Link to="/arquivos">
+                <Link to={props.location.pathname + '/arquivos'}>
                     <div class="icons-box">
                         <i class="fa fa-camera fa-3x" aria-hidden="true"></i>
                     </div>
@@ -16,7 +16,7 @@ export const MenuItem = (props) => (
         </div>
         <div class="col-md-2">
             <div class="menu-item">
-                <Link to="/parecer">
+                <Link to={props.location.pathname + '/parecer'}>
                     <div class="icons-box">
                         <i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i>
                     </div>

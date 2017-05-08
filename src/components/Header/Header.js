@@ -20,7 +20,7 @@ export const Header = () => (
             <li><a>Contato</a></li>
           </ul>
           <ul className='nav navbar-nav navbar-right'>
-            <li><Link to='/cadastro'><span className='glyphicon glyphicon-user' /> Cadastrar</Link></li>
+            <li><Link to='/cadastro-aluno'><span className='glyphicon glyphicon-user' /> Cadastrar aluno</Link></li>
             <li><Link to='/login'><span className='glyphicon glyphicon-log-in' /> Entrar</Link></li>
           </ul>
         </div></div>

@@ -14,12 +14,13 @@ mongoose.connection.once('open', function() {
 
 router.post('/files', upload.any(), function(req, res, next){
     let file = req.files[0];
-
+    let keywords = req.body.keywords ? req.body.keywords.split(',') : null;
+    
     let newFile = {
       _studentId: req.body.studentId,
       date: req.body.date,
       comment: req.body.comment,
-      keywords: req.body.keywords.split(',') || [] 
+      keywords
     };
 
     let writestream = gfs.createWriteStream({

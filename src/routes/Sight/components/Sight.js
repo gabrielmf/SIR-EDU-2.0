@@ -2,7 +2,8 @@ import React from 'react'
 import Slider from 'components/Slider'
 import TinyMCE from 'react-tinymce'
 import Paper from 'material-ui/Paper'
-import { TextField, DatePicker } from 'material-ui';
+import { browserHistory } from 'react-router'
+import { TextField, DatePicker, RaisedButton } from 'material-ui';
 import './Sight.scss'
 
 const paperStyle = {
@@ -12,11 +13,40 @@ const paperStyle = {
 class Sight extends React.Component {
     constructor(props) {
         super(props);
-        console.log('parecer props', props || 'empty');
+        this.state = {
+            _studentId: this.props.params.id || '',
+            date: '',
+            text: ''
+        };
+        this.student = '';
+        this.handleEditorChange = this.handleEditorChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
+        this.handleSave = this.handleSave.bind(this);
+    }
+
+    componentDidMount() {
+        console.log(this.props.students);
     }
 
     handleEditorChange = (e) => {
-        console.log('Content was updated:', e.target.getContent());
+        this.setState({
+            text: e.target.getContent().trim()
+        });
+    }
+
+    handleChange(key, value) {
+        this.setState({
+            [key]: value
+        });
+    }
+
+    handleCancel() {
+        browserHistory.push('/aluno/' + this.props.params.id);
+    }
+
+    handleSave() {
+        this.props.saveJudgement(this.state);
     }
 
     render() {
@@ -25,19 +55,22 @@ class Sight extends React.Component {
                 <h1 class="text-center">Parecer</h1>
                 <div class="student-info">
                     <div class="col-md-6">
-                        <TextField fullWidth={true} floatingLabelText="Nome do Aluno" value="Joao"/>
+                        <TextField fullWidth={true} floatingLabelText="Nome do Aluno"/>
                     </div>
                     <div class="col-md-3">
-                        <TextField fullWidth={true} floatingLabelText="Turma" value="turma 12"/>
+                        <TextField fullWidth={true} floatingLabelText="Turma"/>
                     </div>
                     <div class="col-md-3">
-                        <DatePicker floatingLabelText="Data"/>
+                        <DatePicker DateTimeFormat={Intl.DateTimeFormat}
+                            locale="pt-br"
+                            onChange={(evt, value)=>{this.handleChange('date', value)}}
+                            floatingLabelText="Data"
+                        />
                     </div>
                 </div>
                 <div class="col-md-12">
                     <Paper style={paperStyle} zDepth={5}>
                         <TinyMCE
-                            content="<p>This is the initial content of the editor</p>"
                             config={{
                                 plugins: 'link image code autoresize',
                                 toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code',
@@ -46,7 +79,13 @@ class Sight extends React.Component {
                         />
                     </Paper>
                 </div>
-                {/*<Slider/>*/}
+                <div class="col-md-12">
+                    <div class="pull-left actions">
+                        <RaisedButton class="btn-actions" label="Cancelar" onClick={this.handleCancel}/>
+                        <RaisedButton class="btn-actions" label="Salvar" primary={true} onClick={this.handleSave}/>
+                    </div>
+                </div>
+                <Slider/>
             </div>
         );
     }

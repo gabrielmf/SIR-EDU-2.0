@@ -13,7 +13,6 @@ export default class TermOfUse extends React.Component {
 
     open() {
         this.setState({ openTermOfUse: true });
-        console.log('ayiuguysdgayus')
     }
 
     close() {

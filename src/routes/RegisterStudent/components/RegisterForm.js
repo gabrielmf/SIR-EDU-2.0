@@ -101,7 +101,7 @@ export default class RegisterForm extends React.Component {
                             </span>
                         </div>
                         <div class="col-md-6">
-                            <TextField required class="col-md-6" fullWidth={true} value={this.state.name || ''} type="text" name="name" onChange={this.handleChange} floatingLabelText="Nome"/>
+                            <TextField class="col-md-6" fullWidth={true} value={this.state.name || ''} type="text" name="name" onChange={this.handleChange} floatingLabelText="Nome"/>
                             <TextField class="col-md-6" fullWidth={true} value={this.state.registration || ''} type="number" name="registration" onChange={this.handleChange}  floatingLabelText="Matrícula"/>
                             <TextField class="col-md-6" fullWidth={true} value={this.state.classNumber || ''} type="number" name="classNumber" onChange={this.handleChange} floatingLabelText="Turma"/>
                             <TextField class="col-md-6" fullWidth={true} value={this.state.shift || ''} type="text" name="shift" onChange={this.handleChange} floatingLabelText="Turno"/>
@@ -144,7 +144,6 @@ export default class RegisterForm extends React.Component {
                             <label>Inserir documento com aprovação dos pais:</label>
                             <span class="text-center">
                                 <Dropzone
-                                    required
                                     multiple={false}
                                     name="docParentsAproval"
                                     onDrop={this.onImageDrop}
@@ -154,7 +153,7 @@ export default class RegisterForm extends React.Component {
                             </span>
                         </div>
                         <div style={{marginTop: 20}}>
-                            <Checkbox required style={{width: 290, float: 'left', marginTop: 5}} 
+                            <Checkbox style={{width: 290, float: 'left', marginTop: 5}} 
                                 label="Você concorda com o termo de uso?" name="termOfUse" 
                                 checked={this.state.termOfUse || false} 
                                 onCheck={this.handleCheckbox}

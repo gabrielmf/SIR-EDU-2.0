@@ -5,9 +5,7 @@ import CounterRoute from './Counter'
 import LoginRoute from './Login'
 import StudentsRoute from  './Students'
 import RegisterStudentRoute from './RegisterStudent'
-import SightRoute from './Sight'
 import StudentMenu from './StudentMenu'
-import StudentFiles from './StudentFiles'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -21,9 +19,7 @@ export const createRoutes = (store) => ({
     LoginRoute,
     StudentsRoute,
     RegisterStudentRoute,
-    SightRoute,
-    StudentMenu,
-    StudentFiles
+    StudentMenu
   ]
 })
 

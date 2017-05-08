@@ -1,6 +1,9 @@
 import StudentMenuContainer from './containers/StudentMenuContainer'
+import StudentFiles from '../StudentFiles'
+import SightRoute from '../Sight'
 
 export default {
     path: 'aluno/:id',
-    component: StudentMenuContainer
+    component: StudentMenuContainer,
+    childRoutes : [StudentFiles, SightRoute]
 }

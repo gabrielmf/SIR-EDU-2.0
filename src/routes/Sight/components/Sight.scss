@@ -1,7 +1,15 @@
 .sight {
-    min-height: 400px;
+    min-height: 800px;
 
     .student-info {
         margin-bottom: 110px;
+    }
+
+    .actions {
+        margin: 40px 0 200px 0;
+    }
+
+    .btn-actions {
+        margin-right: 5px;
     }
 }

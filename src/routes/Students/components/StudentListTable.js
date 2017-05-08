@@ -32,6 +32,7 @@ export default class StudentListTable extends React.Component {
 
   componentDidMount() {
     const { getStudentsList, students } = this.props;
+    
     if(!students.list.length) {
       getStudentsList();
     }
@@ -79,8 +80,7 @@ export default class StudentListTable extends React.Component {
           <TableBody
             showRowHover={true}
             displayRowCheckbox={false}
-            deselectOnClickaway={true}
-          >
+            deselectOnClickaway={true}>
             {filteredStudents.map( (student, index) => (
               <TableRow key={index}>
                 <TableRowColumn>
@@ -90,9 +90,11 @@ export default class StudentListTable extends React.Component {
                       <Avatar src={defaultAvatar} class="student-avatar pull-left" size={45}/>
                     }
                 </TableRowColumn>
-                <TableRowColumn><Link to={'aluno/'+student._id}>{student.name}</Link></TableRowColumn>
-                <TableRowColumn>Escola</TableRowColumn>
-                <TableRowColumn>Turma</TableRowColumn>
+                <TableRowColumn>
+                  <Link to={'aluno/'+student._id}>{student.name}</Link>
+                </TableRowColumn>
+                <TableRowColumn>{student.school || ''}</TableRowColumn>
+                <TableRowColumn>{student.classNumber || ''}</TableRowColumn>
                 <TableRowColumn>
                     <span class="edit-student">
                         <i class="fa fa-pencil-square-o fa-lg"

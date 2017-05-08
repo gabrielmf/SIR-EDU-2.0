@@ -33,7 +33,9 @@ let upload = multer({ storage: storage });
 
 //TODO 1 - middleware to check user permissions, 2- treat errors with some middleware
 router.post('/students', upload.any(), function(req, res, next) {
-    let newStudent = {};
+    let newStudent = {
+        _createdBy: req.user._id
+    };
 
     Object.assign(newStudent, req.body);
     
@@ -61,7 +63,7 @@ router.post('/students', upload.any(), function(req, res, next) {
 });
 
 router.get('/students', function(req, res, next) {
-    studentService.find()
+    studentService.find({ _createdBy: req.user._id })
         .then((data) => {
             res.json(data);
         })
@@ -71,6 +73,7 @@ router.get('/students', function(req, res, next) {
         })
 });
 
+//TODO check if user has control over the student
 router.get('/students/:id', function(req, res, next) {
     studentService.findById(req.params.id)
         .then((data) => {

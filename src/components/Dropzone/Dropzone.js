@@ -17,7 +17,7 @@ const preventDropOnDocument = () => {
 const getFilePreview = (file) => {
     console.log(file);
     if(file.type.includes('video')) {
-        return (<video src={file.preview} class="video-thumb" preload="metadata"/>);
+        return (<video src={file.preview} class="video-thumb" controls preload="metadata"/>);
     }
     return (<img src={file.preview} class="img-thumbnail" height="100" width="230"/>);
 } 
@@ -30,6 +30,10 @@ export default class DropzoneComponent extends React.Component {
         this.removeFile = this.removeFile.bind(this);
         preventDropOnDocument();
         this.file = this.props.initConfig || null;
+    }
+
+    shouldComponentUpdate(nextProps) {
+        return this.props.initConfig !== nextProps.initConfig;
     }
 
     onOpenClick() {

@@ -3,15 +3,17 @@ import axios from './axios-config'
 export default class filesService {
     static getFiles(studentId) {
         return axios.get('files', {
-            _studentId: studentId
+            params: { _studentId: studentId }
         });
     }
 
-    static uploadFile(file, studentId) {
+    static uploadFile(file) {
         let newFile = new FormData();
+
         Object.keys(file).forEach((key) => {
-            newStudent.append(key, file[key]);
+            newFile.append(key, file[key]);
         });
+
         return axios.post('files', newFile);
     }
 }

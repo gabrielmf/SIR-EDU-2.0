@@ -24,8 +24,8 @@ let StudentSchema = new Schema({
   specialNeeds: [{ type: String }],
   docParentsAproval: { path: String, mimeType: String },
   termOfUse: { type: Boolean },
-  _createdBy: { type: Number, ref: 'User' }, //Link to teacher model
-  _schoolId: { type: Number, ref: 'School' } //Link to school model
+  _createdBy: { type: String, ref: 'User' }, //Link to teacher model
+  _schoolId: { type: String, ref: 'School' } //Link to school model
  });
 
 // set up a mongoose model

@@ -7,28 +7,33 @@ import './StudentFiles.scss'
 class StudentFiles extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             file: null,
             date: '',
             comment: '',
-            _studentId: '58ec45e1fe53e60c5321ed8f'
-        }
+            _studentId: this.props.params.id || ''
+        };
+
         this.onDropFile = this.onDropFile.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
         this.handleSave = this.handleSave.bind(this);
     }
 
-    onDropFile(file) {
-        this.setState({ file: file[0] });
+    onDropFile(key, file) {
+        this.setState({ [key]: file });
+    }
+
+    handleChange(key, val) {
+        this.setState({ [key]: val });
     }
 
     handleCancel() {
-        console.log('back')
+        browserHistory.push('/aluno/' + this.props.params.id);
     }
 
     handleSave() {
-        console.log('save', this.state);
-        // this.props.uploadFile(this.state);
+        this.props.uploadFile(this.state);
     }
     
     render() {
@@ -52,6 +57,7 @@ class StudentFiles extends React.Component {
                         locale="pt-br"
                         floatingLabelFixed={true}
                         floatingLabelText="Data:"
+                        onChange={(evt, val) => {this.handleChange('date', val)}}
                         placeholder="dd/mm/aaaa"
                     />
                 </div>
@@ -60,12 +66,17 @@ class StudentFiles extends React.Component {
                         floatingLabelText="Comentário sobre a foto/vídeo:"
                         multiLine={true}
                         fullWidth={true}
+                        onChange={(evt, val) => {this.handleChange('comment', val)}}
                     />
                 </div>
                 <div class="col-md-12">
                     <div class="pull-right actions">
                         <RaisedButton class="btn-actions" label="Cancelar" onClick={this.handleCancel}/>
-                        <RaisedButton class="btn-actions" label="Salvar" primary={true} onClick={this.handleSave}/>
+                        <RaisedButton class="btn-actions" 
+                            label="Salvar"
+                            primary={true}
+                            disabled={this.state.file === null}
+                            onClick={this.handleSave}/>
                     </div>
                 </div>
             </div>
