@@ -12,8 +12,8 @@ export const makeRootReducer = (asyncReducers) => {
     auth: loginReducer,
     students: studentsReducer,
     loading: loadingReducer,
-    filesReducer,
-    judgementReducer,
+    files : filesReducer,
+    judgement: judgementReducer,
     ...asyncReducers
   })
 }

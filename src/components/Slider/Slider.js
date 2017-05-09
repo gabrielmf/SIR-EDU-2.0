@@ -7,6 +7,10 @@ class Slider extends React.Component {
   constructor(props) {
       super(props);
   }
+
+  shouldComponentUpdate(nextProps) {
+      return this.props.items !== nextProps.items;
+  }
   
   render() {
     const settings = {
@@ -17,16 +21,18 @@ class Slider extends React.Component {
       slidesToScroll: 6,
       className: 'slider-border'
     };
+
+    const { items } = this.props;
+    
     return (
       <div class="slider-toolbar">
-        <Toolbar/>
+        {/*<Toolbar/>*/}
         <SlickSlider {...settings}>
-          <div><h3>1</h3></div>
-          <div><h3>2</h3></div>
-          <div><h3>3</h3></div>
-          <div><h3>4</h3></div>
-          <div><h3>5</h3></div>
-          <div><h3>6</h3></div>
+          <div>
+            {items.map((item, index) => ( 
+              <img key={index} src={'http://localhost:3000/api/files/' + item._id}/>
+            ))}
+          </div>
         </SlickSlider>
       </div>
     );

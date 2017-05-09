@@ -1,16 +1,15 @@
 import { connect } from 'react-redux'
 
 import StudentMenu from '../components/StudentMenu'
-import { getStudentsList, filterStudents } from 'store/students'
+import { getFiles } from 'store/files'
 
 const mapDispatchToProps = {
-    getStudentsList,
-    filterStudents
+    getFiles
 }
 
 const mapStateToProps = (state) => ({
     students: state.students,
-    filterText: state.students.filterText
+    files: state.files
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentMenu)

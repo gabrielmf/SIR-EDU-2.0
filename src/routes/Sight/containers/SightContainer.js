@@ -1,9 +1,11 @@
 import { connect } from 'react-redux'
 import SightComponent from '../components/Sight'
 import { saveJudgement } from 'store/judgement'
+import { getFiles } from 'store/files'
 
 const mapDispatchToProps = {
-    saveJudgement
+    saveJudgement,
+    getFiles
 }
 
 const mapStateToProps = (state) => ({

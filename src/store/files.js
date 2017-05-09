@@ -1,6 +1,4 @@
 import filesService from 'services/files-service'
-import router from 'helpers/router-helper';
-import { loadingStart, loadingStop } from './loading'
 
 // ------------------------------------
 // Constants
@@ -8,25 +6,25 @@ import { loadingStart, loadingStop } from './loading'
 export const UPLOAD_FILE_REQUEST = 'UPLOAD_FILE_REQUEST'
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
 export const UPLOAD_FILE_FAILURE = 'UPLOAD_FILE_FAILURE'
-export const GET_FILE_REQUEST = 'GET_FILE_REQUEST'
-export const GET_FILE_SUCCESS = 'GET_FILE_SUCCESS'
-export const GET_FILE_FAILURE = 'GET_FILE_FAILURE'
+export const GET_FILES_REQUEST = 'GET_FILES_REQUEST'
+export const GET_FILES_SUCCESS = 'GET_FILES_SUCCESS'
+export const GET_FILES_FAILURE = 'GET_FILES_FAILURE'
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function uploadRequest() {
+export function request(type) {
   return {
-    type:  UPLOAD_FILE_REQUEST,
+    type,
     payload: {
         isFetching: true,
     }
   }
 }
 
-export function uploadFailure(message) {
+export function failure(type, message) {
   return {
-    type: UPLOAD_FILE_FAILURE,
+    type,
     payload: {
         isFetching: false,
         error: message
@@ -34,41 +32,55 @@ export function uploadFailure(message) {
   }
 }
 
-export function uploadSuccess(file) {
+export function success(type, data) {
   return {
-    type: UPLOAD_FILE_SUCCESS,
+    type,
     payload: {
         isFetching: false,
-        file
+        data
     }
   }
 }
 
 export function uploadFile(file) {
   return dispatch => {
-    uploadRequest();
-    return filesService.uploadFile(file).then((data) => {
-        console.log('file', data);
-        uploadSuccess(data);
+      request(UPLOAD_FILE_REQUEST);
+    return filesService.uploadFile(file)
+      .then((data) => {
+        success(UPLOAD_FILE_SUCCESS, data);
     }).catch((error) => {
-        uploadFailure(err);
+        failure(UPLOAD_FILE_FAILURE, error);
     })
   } 
+}
+
+export function getFiles(studentId) {
+  return dispatch => {
+      dispatch(request(GET_FILES_REQUEST));
+    return filesService.getAll(studentId)
+      .then((res) => {
+        dispatch(success(GET_FILES_SUCCESS, res.data));
+    }).catch((error) => {
+        dispatch(failure(GET_FILES_FAILURE, error));
+    })
+  }
 }
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [UPLOAD_FILE_REQUEST] : (state, action) => state,
   [UPLOAD_FILE_SUCCESS] : (state, action) => state,
-  [UPLOAD_FILE_FAILURE] : (state, action) => state
+  [GET_FILES_SUCCESS] : (state, action) => ({ 
+      isFetching: action.payload.isFetching, 
+      list: [ ...action.payload.data ]
+  })
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
-export default function filesReducer (state = { file: {} }, action) {
+export default function filesReducer (state ={ list: [], isFetching: false }, action) {
   const handler = ACTION_HANDLERS[action.type]
 
   return handler ? handler(state, action) : state

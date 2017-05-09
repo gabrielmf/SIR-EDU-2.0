@@ -85,7 +85,7 @@ class Sight extends React.Component {
                         <RaisedButton class="btn-actions" label="Salvar" primary={true} onClick={this.handleSave}/>
                     </div>
                 </div>
-                <Slider/>
+                {/*<Slider items={[1,2,3,4,5]}/>*/}
             </div>
         );
     }

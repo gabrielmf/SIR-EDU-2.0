@@ -1,10 +1,15 @@
 import React from 'react'
 import MenuItem from './MenuItem'
+import Slider from 'components/Slider'
 
 export default class StudentMenu extends React.Component {
     constructor(props) {
         super(props);
-        console.log('menu', this.props);
+    }
+
+    componentDidMount() {
+        const { getFiles, routeParams } = this.props;
+        getFiles(routeParams.id);
     }
 
     render() {
@@ -18,6 +23,7 @@ export default class StudentMenu extends React.Component {
                     <div class="col-md-12">
                         <MenuItem location={this.props.location}/>
                     </div>
+                    { this.props.files.list && <Slider items={this.props.files.list}/> }
                 </div>
             }
             </div>
