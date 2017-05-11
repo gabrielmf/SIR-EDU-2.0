@@ -14,3 +14,22 @@
 .slider-border {
     border: 1px solid;
 }
+
+.slider-item {
+    padding: 5px;
+    margin: 5px;
+
+    .comment {
+        margin: 20px 1px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    img {
+        height: 100px;
+    }
+    video {
+        height: 95px;
+    }
+}

@@ -72,7 +72,7 @@ class Sight extends React.Component {
                     <Paper style={paperStyle} zDepth={5}>
                         <TinyMCE
                             config={{
-                                plugins: 'link image code autoresize',
+                                plugins: 'link paste code autoresize',
                                 toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code',
                             }}
                             onChange={this.handleEditorChange}

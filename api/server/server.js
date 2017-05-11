@@ -49,7 +49,7 @@ const jwtOptions = { secret: config.secret, ignoreExpiration: true,
 };
 
 // App routes
-app.use('/api', jwt(jwtOptions).unless({path: [ '/api/authenticate' , '/api/register', 'api/judgement']}), routes);
+app.use('/api', jwt(jwtOptions).unless({path: [ '/api/authenticate' , '/api/register',  /\/api\/files*/]}), routes);
 app.use('/uploads', express.static(rootDir + '/uploads'));
 
 // ------------------------------------

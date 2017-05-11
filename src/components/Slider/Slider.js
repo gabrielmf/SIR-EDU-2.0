@@ -1,7 +1,12 @@
 import React from 'react'
 import SlickSlider from 'react-slick'
+import SliderItem from './SliderItem'
 import Toolbar from './Toolbar'
 import './Slider.scss'
+
+const files = (items) => {
+    return items.map((item, index) =>(<div key={index}><SliderItem item={item}></SliderItem></div>))
+}
 
 class Slider extends React.Component {
   constructor(props) {
@@ -15,24 +20,21 @@ class Slider extends React.Component {
   render() {
     const settings = {
       dots: true,
-      infinite: true,
+      infinite: false,
       speed: 500,
       slidesToShow: 6,
       slidesToScroll: 6,
+      variableWidth: true,
       className: 'slider-border'
     };
 
-    const { items } = this.props;
-    
+    const filesList = files(this.props.items);
+    console.log(filesList)
     return (
       <div class="slider-toolbar">
         {/*<Toolbar/>*/}
         <SlickSlider {...settings}>
-          <div>
-            {items.map((item, index) => ( 
-              <img key={index} src={'http://localhost:3000/api/files/' + item._id}/>
-            ))}
-          </div>
+            {filesList}
         </SlickSlider>
       </div>
     );
