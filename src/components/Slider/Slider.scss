@@ -16,7 +16,7 @@
 }
 
 .slider-item {
-    padding: 5px;
+    padding: 5px 5px;
     margin: 5px;
 
     .comment {
@@ -28,6 +28,7 @@
     
     img {
         height: 100px;
+        margin: auto;
     }
     video {
         height: 95px;

@@ -26,7 +26,7 @@ class Sight extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.students);
+        console.log(this.props.students, this.props.files);
     }
 
     handleEditorChange = (e) => {
@@ -50,6 +50,7 @@ class Sight extends React.Component {
     }
 
     render() {
+        const { files } = this.props;
         return (
             <div class="container sight">
                 <h1 class="text-center">Parecer</h1>
@@ -85,7 +86,7 @@ class Sight extends React.Component {
                         <RaisedButton class="btn-actions" label="Salvar" primary={true} onClick={this.handleSave}/>
                     </div>
                 </div>
-                {/*<Slider items={[1,2,3,4,5]}/>*/}
+                files.list && files.list.length && <Slider items={files.list} editable={true}/>
             </div>
         );
     }

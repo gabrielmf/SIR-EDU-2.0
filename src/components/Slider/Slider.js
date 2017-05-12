@@ -4,8 +4,8 @@ import SliderItem from './SliderItem'
 import Toolbar from './Toolbar'
 import './Slider.scss'
 
-const files = (items) => {
-    return items.map((item, index) =>(<div key={index}><SliderItem item={item}></SliderItem></div>))
+const files = (items, editable) => {
+    return items.map((item, index) =>(<div key={index}><SliderItem item={item} editable={editable}></SliderItem></div>))
 }
 
 class Slider extends React.Component {
@@ -20,15 +20,15 @@ class Slider extends React.Component {
   render() {
     const settings = {
       dots: true,
-      infinite: false,
       speed: 500,
-      slidesToShow: 6,
-      slidesToScroll: 6,
-      variableWidth: true,
+      infinite: false,
+      slidesToShow: 5,
+      slidesToScroll: 5,
+      lazyLoad: true,
       className: 'slider-border'
     };
 
-    const filesList = files(this.props.items);
+    const filesList = files(this.props.items, this.props.editable || false);
     console.log(filesList)
     return (
       <div class="slider-toolbar">
