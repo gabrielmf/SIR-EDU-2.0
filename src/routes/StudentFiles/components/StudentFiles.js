@@ -70,7 +70,7 @@ class StudentFiles extends React.Component {
                     />
                 </div>
                 <div class="col-md-12">
-                    <div class="pull-right actions">
+                    <div class="pull-left actions">
                         <RaisedButton class="btn-actions" label="Cancelar" onClick={this.handleCancel}/>
                         <RaisedButton class="btn-actions" 
                             label="Salvar"

@@ -5,6 +5,7 @@ import studentsReducer from './students'
 import loadingReducer from './loading'
 import filesReducer from './files'
 import judgementReducer from './judgement'
+import usersReducer from './users' 
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
@@ -14,6 +15,7 @@ export const makeRootReducer = (asyncReducers) => {
     loading: loadingReducer,
     files : filesReducer,
     judgement: judgementReducer,
+    user: usersReducer,
     ...asyncReducers
   })
 }

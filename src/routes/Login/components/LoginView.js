@@ -1,6 +1,7 @@
 import React from 'react';
 import './LoginView.scss';
-import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
+import LoadingSpinner from 'components/LoadingSpinner';
+import { Link } from 'react-router'
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -54,7 +55,7 @@ export default class Login extends React.Component {
                   <button type="submit" name="go" class="btn btn-block btn-success">Entrar</button>
                 </section>
                 <div>
-                  <a href="#">Esqueceu sua senha?</a>
+                  <Link to="/cadastro-usuario">Criar uma conta</Link>
                 </div>
               </form>
             </section>

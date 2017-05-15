@@ -6,7 +6,10 @@ var authenticationService = new AuthenticationService();
 
 //TODO treat errors with some middleware
 router.post('/register', function(req, res, next) {
-	authenticationService.registerUser(req.body)
+    let newUser = { role: 'admin' };
+    Object.assign(newUser, req.body);
+
+	authenticationService.registerUser(newUser)
     .then((data) => {
       //TODO review the information that needs to be returned
         res.json(data);
