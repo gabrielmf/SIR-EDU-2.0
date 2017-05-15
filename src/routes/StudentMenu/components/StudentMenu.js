@@ -23,7 +23,7 @@ export default class StudentMenu extends React.Component {
                     <div class="col-md-12">
                         <MenuItem location={this.props.location}/>
                     </div>
-                    { this.props.files.list.length && <Slider items={this.props.files.list}/> }
+                    {/*{ this.props.files.list.length && <Slider items={this.props.files.list}/> }*/}
                 </div>
             }
             </div>

@@ -18,19 +18,32 @@
 .slider-item {
     padding: 5px 5px;
     margin: 5px;
+    cursor: pointer;
 
-    .comment {
-        margin: 20px 1px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    .info {
+        max-width: 220px;
+
+        .comment {
+            margin: 20px 1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        img {
+            height: 125px;
+            margin: auto;
+        }
+        video {
+            width: 100%;
+            height: 120px;
+        }
     }
-    
-    img {
-        height: 145px;
-    }
-    video {
-        width: 100%;
-        height: 140px;
+}
+
+.modal-body .item-modal {
+    img, video {
+        max-width: 100%;
+        margin: auto;
     }
 }

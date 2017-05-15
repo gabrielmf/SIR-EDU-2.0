@@ -1,15 +1,14 @@
 .sight {
-    min-height: 800px;
+    min-height: 1000px;
 
-    .student-info {
-        margin-bottom: 110px;
+    .text-area {
+        margin-bottom: 320px;
     }
 
-    .actions {
-        margin: 40px 0 200px 0;
-    }
-
-    .btn-actions {
-        margin-right: 5px;
+    .toolbar-edit {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
     }
 }

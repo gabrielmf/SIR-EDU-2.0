@@ -1,12 +1,6 @@
 import React from 'react'
 import SlickSlider from 'react-slick'
-import SliderItem from './SliderItem'
-import Toolbar from './Toolbar'
 import './Slider.scss'
-
-const files = (items, editable) => {
-    return items.map((item, index) =>(<div key={index}><SliderItem item={item} editable={editable}></SliderItem></div>))
-}
 
 class Slider extends React.Component {
   constructor(props) {
@@ -14,7 +8,7 @@ class Slider extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-      return this.props.items !== nextProps.items;
+      return this.props.children !== nextProps.children;
   }
   
   render() {
@@ -28,13 +22,10 @@ class Slider extends React.Component {
       className: 'slider-border'
     };
 
-    const filesList = files(this.props.items, this.props.editable || false);
-    console.log(filesList)
     return (
       <div class="slider-toolbar">
-        {/*<Toolbar/>*/}
         <SlickSlider {...settings}>
-            {filesList}
+            {this.props.children}
         </SlickSlider>
       </div>
     );

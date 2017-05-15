@@ -3,26 +3,39 @@ import Slider from 'components/Slider'
 import TinyMCE from 'react-tinymce'
 import Paper from 'material-ui/Paper'
 import { browserHistory } from 'react-router'
-import { TextField, DatePicker, RaisedButton } from 'material-ui';
+import { TextField, DatePicker, RaisedButton, FlatButton, MenuItem, Menu, Popover } from 'material-ui';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import './Sight.scss'
+import SliderItem from 'components/Slider/SliderItem';
 
 const paperStyle = {
   marginBotton: 300
 };
 
+const filesCarousel = (items, actions) => {
+    return items.map((item, index) =>(
+        <div key={index}>
+            <SliderItem item={item} editable={true} actions={actions}/>
+        </div>)
+    )
+}
+
 class Sight extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            _studentId: this.props.params.id || '',
-            date: '',
-            text: ''
+            judgement: {
+                _studentId: this.props.params.id || '',
+                date: '',
+                text: ''
+            }
         };
         this.student = '';
         this.handleEditorChange = this.handleEditorChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
         this.handleSave = this.handleSave.bind(this);
+        this.handleInsertLink = this.handleInsertLink.bind(this);
     }
 
     componentDidMount() {
@@ -31,13 +44,19 @@ class Sight extends React.Component {
 
     handleEditorChange = (e) => {
         this.setState({
-            text: e.target.getContent().trim()
+            judgement: {
+                ...this.state.judgement,
+                text: e.target.getContent().trim()
+            }
         });
     }
 
     handleChange(key, value) {
         this.setState({
-            [key]: value
+            judgement: {
+                ...this.state.judgement,
+                [key]: value
+            }
         });
     }
 
@@ -45,15 +64,67 @@ class Sight extends React.Component {
         browserHistory.push('/aluno/' + this.props.params.id);
     }
 
-    handleSave() {
-        this.props.saveJudgement(this.state);
+    handleSave = () => {
+        //this.props.saveJudgement(this.state);
+        console.log(this.state.judgement)
+    }
+
+    handleTouchTap = (event) => {
+        // This prevents ghost click.
+        event.preventDefault();
+
+        this.setState({
+            open: true,
+            anchorEl: event.currentTarget,
+        });
+    };
+
+    handleRequestClose = () => {
+        this.setState({
+            open: false,
+        });
+    };
+
+    handleInsertLink(url, text) {
+        let val = '<a href=' + url +'>' + text + '</a>';
+        tinymce.activeEditor.execCommand('mceInsertContent', false, val );
     }
 
     render() {
         const { files } = this.props;
+        const actions = {
+            insert: this.handleInsertLink
+        };
+
         return (
             <div class="container sight">
-                <h1 class="text-center">Parecer</h1>
+                <Toolbar className="toolbar-edit">
+                    <ToolbarGroup>
+                        <ToolbarTitle text="Parecer" />
+                        <ToolbarSeparator />
+                        <FlatButton
+                            onTouchTap={this.handleTouchTap}
+                            label="Opções"
+                        />
+                        <Popover
+                            open={this.state.open}
+                            anchorEl={this.state.anchorEl}
+                            anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                            targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                            onRequestClose={this.handleRequestClose}
+                        >
+                        <Menu>
+                            <MenuItem primaryText="Imprimir" />
+                            <MenuItem primaryText="Gerar aquivo Word" />
+                            <MenuItem primaryText="Gerar aquivo PDF" />
+                        </Menu>
+                        </Popover>
+                    </ToolbarGroup>
+                    <ToolbarGroup lastChild={true}>
+                        <RaisedButton label="Salvar" primary={true} onTouchTap={this.handleSave} />
+                    </ToolbarGroup>
+                </Toolbar>
+                <h1 class="text-center"></h1>
                 <div class="student-info">
                     <div class="col-md-6">
                         <TextField fullWidth={true} floatingLabelText="Nome do Aluno"/>
@@ -69,24 +140,24 @@ class Sight extends React.Component {
                         />
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 text-area">
                     <Paper style={paperStyle} zDepth={5}>
                         <TinyMCE
+                            content={this.state.judgement.text}
                             config={{
-                                plugins: 'link paste code autoresize',
-                                toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code',
+                                plugins: 'link paste autoresize',
+                                toolbar: 'undo redo | bold italic | link | alignleft aligncenter alignright',
+                                autoresize_min_height: 400,
+                                autoresize_max_height: 600
                             }}
                             onChange={this.handleEditorChange}
                         />
                     </Paper>
                 </div>
-                <div class="col-md-12">
-                    <div class="pull-left actions">
-                        <RaisedButton class="btn-actions" label="Cancelar" onClick={this.handleCancel}/>
-                        <RaisedButton class="btn-actions" label="Salvar" primary={true} onClick={this.handleSave}/>
-                    </div>
-                </div>
-                files.list && files.list.length && <Slider items={files.list} editable={true}/>
+                {files.list && files.list.length && 
+                    <Slider>
+                        {filesCarousel(files.list, actions)}
+                    </Slider>}
             </div>
         );
     }
