@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://localhost:'+process.env.PORT+'/api';
+export const BASE_URL = '/api';
