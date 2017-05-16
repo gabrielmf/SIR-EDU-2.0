@@ -1,7 +1,7 @@
-import axios from 'axios'
+import axios from 'services/axios-config'
 
 export default function loginUser(credentials) {
-    return axios.post('http://localhost:3000/api/authenticate', {  
+    return axios.post('authenticate', {  
         ...credentials
     })
 }
