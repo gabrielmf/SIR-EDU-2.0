@@ -24,6 +24,7 @@ export function requestLogin() {
 }
 
 export function receiveLogin(data) {
+  console.log(data)
   return {
     type: LOGIN_SUCCESS,
     payload: {
@@ -64,7 +65,7 @@ export function login(creds) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
     return loginUser(creds).then((res) => {
-        dispatch(receiveLogin(res));
+        dispatch(receiveLogin(res.data));
         localStorage.setItem('authToken', res.data.token);
         router.goToStudentsPage();
     })

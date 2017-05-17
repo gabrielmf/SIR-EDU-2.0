@@ -22,7 +22,10 @@ export const Header = (props) => (
               [ <li><a>Quem somos</a></li>,
                 <li><a>Serviços</a></li>,
                 <li><a>Contato</a></li>] :
-              <li><Link to='/alunos'>Alunos</Link></li>
+              [
+                <li><Link to='/alunos'>Alunos</Link></li>,
+                <li><Link to='/cadastro-aluno'>Cadastrar aluno</Link></li>
+              ]
             }
           </ul>
           <ul className='nav navbar-nav navbar-right'>
@@ -30,7 +33,7 @@ export const Header = (props) => (
               !props.auth.isAuthenticated ?
               <li><Link to='/login'><span className='glyphicon glyphicon-log-in' /> Entrar</Link></li> :
               [
-                <li><Link to='/cadastro-aluno'><span className='glyphicon glyphicon-user' /> Cadastrar aluno</Link></li>,
+                <li><a><span className='glyphicon glyphicon-user'/> Bem-vindo, {props.auth.user.name}</a></li>,
                 <li>
                   <a onClick={() => { props.logout(); }}>
                     <span className='glyphicon glyphicon-log-out' /> Sair
