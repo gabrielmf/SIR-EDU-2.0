@@ -1,5 +1,6 @@
 import loginUser from 'helpers/auth-helper'
 import router from 'helpers/router-helper'
+import { browserHistory } from 'react-router'
 
 // ------------------------------------
 // Constants
@@ -76,7 +77,7 @@ export function login(creds) {
 
 export function logout() {
     localStorage.removeItem('authToken');
-
+    browserHistory.push('/');
     return dispatch => {
       dispatch(logoutRequest());
     };
