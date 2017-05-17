@@ -7,6 +7,7 @@ import router from 'helpers/router-helper'
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
+export const LOGOUT = 'LOGOUT'
 
 // ------------------------------------
 // Actions
@@ -21,13 +22,14 @@ export function requestLogin() {
   }
 }
 
-export function receiveLogin(user) {
+export function receiveLogin(data) {
   return {
     type: LOGIN_SUCCESS,
     payload: {
         isFetching: false,
         isAuthenticated: true,
-        token: user.token
+        token: data.token,
+        user: data.user
     }
   }
 }
@@ -41,6 +43,18 @@ export function loginError(errorMessage) {
         errorMessage
     }
   }
+}
+
+function logoutRequest() {
+    return {
+      type: LOGOUT,
+      payload: {
+          isFetching: false,
+          isAuthenticated: false,
+          token: '',
+          user: {}
+      }
+    }
 }
 
 export function login(creds) {
@@ -60,6 +74,14 @@ export function login(creds) {
   }
 }
 
+export function logout() {
+    localStorage.removeItem('authToken');
+
+    return dispatch => {
+      dispatch(logoutRequest());
+    };
+}
+
 export const actions = {
   requestLogin,
   receiveLogin,
@@ -70,9 +92,10 @@ export const actions = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [LOGIN_REQUEST] : (state, action) => ({...state, ...action.payload}),
-  [LOGIN_SUCCESS] : (state, action) => ({...state, ...action.payload}),
-  [LOGIN_FAILURE] : (state, action) => ({...state, ...action.payload})
+  [LOGIN_REQUEST] : (state, action) => ({...action.payload}),
+  [LOGIN_SUCCESS] : (state, action) => ({...action.payload}),
+  [LOGIN_FAILURE] : (state, action) => ({...action.payload}),
+  [LOGOUT] : (state, action) => ({...action.payload})
 }
 
 // ------------------------------------

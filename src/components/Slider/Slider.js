@@ -19,6 +19,7 @@ class Slider extends React.Component {
       slidesToShow: 5,
       slidesToScroll: 5,
       lazyLoad: true,
+      draggable: true,
       className: 'slider-border'
     };
 

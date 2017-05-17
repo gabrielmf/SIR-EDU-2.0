@@ -18,7 +18,7 @@ class SliderItem extends React.Component {
     render() {
         const { item, editable } = this.props;
         const type = item.contentType.split('/')[0] || '';
-        const url = 'http://localhost:3000/api/files/' + item._id;
+        const url = '/api/files/' + item._id;
         
         return (
             <div class="slider-item thumbnail">

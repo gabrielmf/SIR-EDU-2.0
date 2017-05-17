@@ -2,8 +2,10 @@ import React from 'react'
 import { Link } from 'react-router'
 import './Header.scss'
 import logo from './assets/sir-edu_logo.png'
+import { connect } from 'react-redux'
+import { logout } from 'store/login'
 
-export const Header = () => (
+export const Header = (props) => (
   <header>
     <nav className='navbar navbar-default'>
       <div className='container-fluid'>
@@ -14,18 +16,40 @@ export const Header = () => (
         </div>
         <div className='navbar-inner'>
           <ul className='nav navbar-nav'>
-            <li className='active'><Link to="/">Home</Link></li>
-            <li><a>Quem somos</a></li>
-            <li><a>Serviços</a></li>
-            <li><a>Contato</a></li>
+            <li><Link to="/">Página inicial</Link></li>
+            {
+              !props.auth.isAuthenticated ? 
+              [ <li><a>Quem somos</a></li>,
+                <li><a>Serviços</a></li>,
+                <li><a>Contato</a></li>] :
+              <li><Link to='/alunos'>Alunos</Link></li>
+            }
           </ul>
           <ul className='nav navbar-nav navbar-right'>
-            <li><Link to='/cadastro-aluno'><span className='glyphicon glyphicon-user' /> Cadastrar aluno</Link></li>
-            <li><Link to='/login'><span className='glyphicon glyphicon-log-in' /> Entrar</Link></li>
+            {
+              !props.auth.isAuthenticated ?
+              <li><Link to='/login'><span className='glyphicon glyphicon-log-in' /> Entrar</Link></li> :
+              [
+                <li><Link to='/cadastro-aluno'><span className='glyphicon glyphicon-user' /> Cadastrar aluno</Link></li>,
+                <li>
+                  <a onClick={() => { props.logout(); }}>
+                    <span className='glyphicon glyphicon-log-out' /> Sair
+                  </a>
+                </li>
+              ]
+            }
           </ul>
         </div></div>
     </nav>
   </header>
 )
 
-export default Header
+const mapDispatchToProps = {
+    logout
+}
+
+const mapStateToProps = (state) => ({
+    auth: state.auth
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

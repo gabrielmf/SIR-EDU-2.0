@@ -63,7 +63,7 @@ class RegisterUser extends React.Component {
                 </Dialog>
                 <h1 class="text-center">Cadastro de Usuário</h1>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-8 col-md-offset-2">
                         <TextField fullWidth={true} value={this.state.user.name || ''} type="text" floatingLabelText="Nome"
                             onChange={(evt, val) => { this.handleChange('name', val) }}>
                         </TextField>
@@ -83,7 +83,7 @@ class RegisterUser extends React.Component {
                             onChange={(evt, val) => { this.handleChange('address', val) }}>
                         </TextField>                                                              
                     </div>
-                    <div class="col-md-12 buttons">
+                    <div class="col-md-8 buttons col-md-offset-2">
                         <RaisedButton class="btn-action" label="Cancelar" onClick={this.handleCancel}/> 
                         <RaisedButton class="btn-action" label="Cadastrar" primary={true} onClick={this.handleSubmit}/>
                     </div>
