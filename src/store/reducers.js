@@ -2,7 +2,6 @@ import { combineReducers } from 'redux'
 import locationReducer from './location'
 import loginReducer from './login';
 import studentsReducer from './students'
-import loadingReducer from './loading'
 import filesReducer from './files'
 import judgementReducer from './judgement'
 import usersReducer from './users' 
@@ -12,7 +11,6 @@ const appReducer = (asyncReducers) => {
     location: locationReducer,
     auth: loginReducer,
     students: studentsReducer,
-    loading: loadingReducer,
     files : filesReducer,
     judgement: judgementReducer,
     user: usersReducer,

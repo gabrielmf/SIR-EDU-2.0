@@ -41,8 +41,8 @@ export default class StudentListTable extends React.Component {
 
   render() {
     const { students, filterText } = this.props;
-    const filteredStudents = getFilteredStudents(students.list, filterText);
-
+    const filteredStudents = getFilteredStudents(students.list, filterText || '');
+    
     return (
       <div class="container student-list">
         <div class="col-md-6 col-md-offset-3">

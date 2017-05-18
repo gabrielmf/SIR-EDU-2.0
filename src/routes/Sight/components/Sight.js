@@ -7,6 +7,7 @@ import { TextField, DatePicker, RaisedButton, FlatButton, MenuItem, Menu, Popove
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import './Sight.scss'
 import SliderItem from 'components/Slider/SliderItem';
+import LoadingSpinner from 'components/LoadingSpinner';
 
 const paperStyle = {
   marginBotton: 300
@@ -39,7 +40,11 @@ class Sight extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.students, this.props.files);
+        const { getFiles, routeParams, files } = this.props;
+
+        if(!files.list.length) {
+            getFiles(routeParams.id);
+        }
     }
 
     handleEditorChange = (e) => {
@@ -98,6 +103,7 @@ class Sight extends React.Component {
 
         return (
             <div class="container sight">
+                <LoadingSpinner loading={files.isFetching}/>
                 <Toolbar className="toolbar-edit">
                     <ToolbarGroup>
                         <ToolbarTitle text="Parecer" />
