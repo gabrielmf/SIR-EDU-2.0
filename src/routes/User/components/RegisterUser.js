@@ -1,7 +1,8 @@
 import React from 'react'
-import { TextField, RaisedButton, Dialog, FlatButton } from 'material-ui'
+import { TextField, RaisedButton, FlatButton } from 'material-ui'
 import LoadingSpinner from 'components/LoadingSpinner';
 import { browserHistory } from 'react-router'
+import Dialog from 'components/Dialog/Dialog'
 import './RegisterUser.scss'
 
 class RegisterUser extends React.Component {
@@ -38,28 +39,24 @@ class RegisterUser extends React.Component {
         this.props.registerUser(this.state.user);
     }
 
+    onCloseModal = () => {
+        const { email, password } = this.state;
+        
+        this.props.closeModal();
+
+        if(this.props.user.success) {
+            this.props.login({email, password});
+        }
+    }
+
     render() {
         const { user, login } = this.props;
         
-        const actions = [
-            <FlatButton
-                label="Ok"
-                primary={true}
-                onTouchTap={() => {
-                    const {email, password} = this.state.user;
-                    user.success ? login({email, password}) : browserHistory.push('/login');
-                }}
-            />
-        ];
         return (
             <div class="register-user">
                 <LoadingSpinner loading={this.props.user.isFetching}/>
-                <Dialog
-                    actions={actions}
-                    modal={true}
-                    open={user.hasOwnProperty('success')}
-                >
-                    {user.message}
+                <Dialog open={this.props.user.showModal} onClose={this.onCloseModal.bind(this)}>
+                    <p>{user.message}</p>
                 </Dialog>
                 <h1 class="text-center">Cadastro de Usuário</h1>
                 <div class="row">
@@ -90,6 +87,14 @@ class RegisterUser extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    componentWillUnmount = () => {
+        const { user, closeModal } = this.props;
+
+        if(user.showModal) {
+            closeModal();
+        }
     }
 }
 

@@ -5,6 +5,7 @@ import { Avatar, TextField } from 'material-ui';
 import { Link } from 'react-router'
 import defaultAvatar from 'public/default-avatar.png'
 import './StudentList.scss';
+import { Alert } from 'react-bootstrap'
 
 const getFilteredStudents = (students, filterText) => {
     return students.filter(student => {
@@ -107,6 +108,13 @@ export default class StudentListTable extends React.Component {
               </TableRow>
               ))}
           </TableBody>
-        </Table></div>
-        </div>);
+        </Table>
+        {
+          !students.list.length &&
+          <Alert bsStyle="warning">
+              <strong>Aviso:</strong> Nenhum aluno cadastrado.
+          </Alert>
+        }
+        </div>
+      </div>);
     }}

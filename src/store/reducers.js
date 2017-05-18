@@ -7,7 +7,7 @@ import filesReducer from './files'
 import judgementReducer from './judgement'
 import usersReducer from './users' 
 
-export const makeRootReducer = (asyncReducers) => {
+const appReducer = (asyncReducers) => {
   return combineReducers({
     location: locationReducer,
     auth: loginReducer,
@@ -24,7 +24,15 @@ export const injectReducer = (store, { key, reducer }) => {
   if (Object.hasOwnProperty.call(store.asyncReducers, key)) return
 
   store.asyncReducers[key] = reducer
-  store.replaceReducer(makeRootReducer(store.asyncReducers))
+  store.replaceReducer(appReducer(store.asyncReducers))
 }
 
-export default makeRootReducer
+const rootReducer = (state, action) => {
+  if (action.type === 'USER_LOGOUT') {
+    state = undefined
+  }
+
+  return appReducer()(state, action)
+}
+
+export default rootReducer

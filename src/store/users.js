@@ -7,6 +7,7 @@ import userService from 'services/users-service'
 const REGISTER_USER_REQUEST = 'REGISTER_USER_REQUEST'
 const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS'
 const REGISTER_USER_FAILURE = 'REGISTER_USER_FAILURE'
+const CLOSE_MODAL = 'CLOSE_MODAL'
 
 // ------------------------------------
 // Actions
@@ -15,7 +16,8 @@ function request(type) {
   return {
     type,
     payload: {
-        isFetching: true
+        isFetching: true,
+        showModal: false
     }
   }
 }
@@ -26,6 +28,7 @@ function failure(type) {
     payload: {
         isFetching: false,
         success: false,
+        showModal: true,
         message: 'Ocorreu algum erro, não foi possível cadastrar o usuário.'
     }
   }
@@ -37,9 +40,20 @@ function success(type) {
     payload: {
         isFetching: false,
         success: true,
+        showModal: true,
         message: 'Usuário salvo com sucesso. Faça login para continuar na aplicação.'
     }
   }
+}
+
+function close_modal() {
+    return {
+        type: CLOSE_MODAL,
+        payload: {
+          isFetching: false,
+          showModal: false,
+        }
+    }
 }
 
 export function registerUser(user) {
@@ -47,12 +61,15 @@ export function registerUser(user) {
         dispatch(request(REGISTER_USER_REQUEST));
         return userService.register(user)
             .then((data) => {
-                console.log('user', data);
                 dispatch(success(REGISTER_USER_SUCCESS));
             }).catch((error) => {
                 dispatch(failure(REGISTER_USER_FAILURE));
             })
   } 
+}
+
+export function closeModal() {
+    return dispatch => { dispatch(close_modal()) };
 }
 
 // ------------------------------------
@@ -61,13 +78,14 @@ export function registerUser(user) {
 const ACTION_HANDLERS = {
   [REGISTER_USER_REQUEST] : (state, action) => ({ ...action.payload }),
   [REGISTER_USER_SUCCESS] : (state, action) => ({ ...action.payload }),
-  [REGISTER_USER_FAILURE] : (state, action) => ({ ...action.payload })
+  [REGISTER_USER_FAILURE] : (state, action) => ({ ...action.payload }),
+  [CLOSE_MODAL] : (state, action) => ({ ...action.payload })
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
-export default function UsersReducer (state = {}, action) {
+export default function UsersReducer (state = { isFetching: false, showModal: false }, action) {
   const handler = ACTION_HANDLERS[action.type]
 
   return handler ? handler(state, action) : state

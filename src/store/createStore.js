@@ -1,5 +1,6 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
+import {persistStore, autoRehydrate} from 'redux-persist'
 import { browserHistory } from 'react-router'
 import makeRootReducer from './reducers'
 import { updateLocation } from './location'
@@ -13,7 +14,7 @@ export default (initialState = {}) => {
   // ======================================================
   // Store Enhancers
   // ======================================================
-  const enhancers = []
+  const enhancers = [autoRehydrate()]
 
   let composeEnhancers = compose
 
@@ -28,7 +29,7 @@ export default (initialState = {}) => {
   // Store Instantiation and HMR Setup
   // ======================================================
   const store = createStore(
-    makeRootReducer(),
+    makeRootReducer,
     initialState,
     composeEnhancers(
       applyMiddleware(...middleware),
@@ -46,6 +47,8 @@ export default (initialState = {}) => {
       store.replaceReducer(reducers(store.asyncReducers))
     })
   }
+
+  persistStore(store)
 
   return store
 }

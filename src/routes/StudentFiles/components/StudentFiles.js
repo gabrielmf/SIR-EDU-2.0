@@ -12,7 +12,7 @@ class StudentFiles extends React.Component {
             file: null,
             date: '',
             comment: '',
-            _studentId: this.props.params.id || ''
+            studentId: this.props.params.id || ''
         };
 
         this.onDropFile = this.onDropFile.bind(this);

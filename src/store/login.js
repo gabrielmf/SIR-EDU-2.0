@@ -8,7 +8,7 @@ import { browserHistory } from 'react-router'
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
-export const LOGOUT = 'LOGOUT'
+export const USER_LOGOUT = 'USER_LOGOUT'
 
 // ------------------------------------
 // Actions
@@ -49,7 +49,7 @@ export function loginError(errorMessage) {
 
 function logoutRequest() {
     return {
-      type: LOGOUT,
+      type: USER_LOGOUT,
       payload: {
           isFetching: false,
           isAuthenticated: false,
@@ -97,7 +97,7 @@ const ACTION_HANDLERS = {
   [LOGIN_REQUEST] : (state, action) => ({...action.payload}),
   [LOGIN_SUCCESS] : (state, action) => ({...action.payload}),
   [LOGIN_FAILURE] : (state, action) => ({...action.payload}),
-  [LOGOUT] : (state, action) => ({...action.payload})
+  [USER_LOGOUT] : (state, action) => ({...action.payload})
 }
 
 // ------------------------------------

@@ -3,7 +3,7 @@ import axios from './axios-config'
 export default class filesService {
     static getAll(studentId) {
         return axios.get('files', {
-            params: { _studentId: studentId }
+            params: { studentId }
         });
     }
 
