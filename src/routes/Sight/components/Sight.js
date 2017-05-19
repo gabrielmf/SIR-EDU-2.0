@@ -8,6 +8,7 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui
 import './Sight.scss'
 import SliderItem from 'components/Slider/SliderItem';
 import LoadingSpinner from 'components/LoadingSpinner';
+import { Alert } from 'react-bootstrap'
 
 const paperStyle = {
   marginBotton: 300
@@ -171,10 +172,15 @@ class Sight extends React.Component {
                     </Paper>
                 </div>
                 <div class="col-md-12 slider">
-                    {files.list && files.list.length && 
-                    <Slider>
-                        {filesCarousel(files.list, actions)}
-                    </Slider>}
+                    {
+                        files.list.length > 0 ?
+                        <Slider>
+                            {filesCarousel(files.list, actions)}
+                        </Slider> :
+                        <Alert bsStyle="warning">
+                            <strong>Aviso:</strong> Nenhum arquivo cadastrado
+                        </Alert>
+                    }
                 </div>
             </div>
         );
