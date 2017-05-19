@@ -23,7 +23,6 @@ const filesCarousel = (items, actions) => {
 
 const searchStudent = (students, id) => {
     let student = students.filter((student) => student._id === id);
-    console.log(student);
     return student.length > 1 ? null : student[0]; 
 }
 
@@ -46,18 +45,10 @@ class Sight extends React.Component {
     }
 
     componentDidMount() {
-        console.log('aqui');
-        const { getFiles, routeParams, files, students, params } = this.props;
-        let student = searchStudent(students, params.id);
-
-        if(student) {
-            this.state.student = student;
-        }
-
-        //ELSE -> TODO get student from server
+        const { getFiles, params, files, students } = this.props;
 
         if(!files.list.length) {
-            getFiles(routeParams.id);
+            getFiles(params.id);
         }
     }
 
@@ -110,9 +101,9 @@ class Sight extends React.Component {
     }
 
     render() {
-        const { files } = this.props;
-        const { student } = this.state;
-        const studentName = student.name + ' ' + student.lastName;
+        const { files, params, students } = this.props;
+        let student = searchStudent(students, params.id) || {};
+        const studentName = student.name + ' ' + (student.lastName || '');
         const actions = {
             insert: this.handleInsertLink
         };
@@ -179,7 +170,7 @@ class Sight extends React.Component {
                         />
                     </Paper>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 slider">
                     {files.list && files.list.length && 
                     <Slider>
                         {filesCarousel(files.list, actions)}
