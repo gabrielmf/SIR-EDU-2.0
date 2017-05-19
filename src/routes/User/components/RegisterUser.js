@@ -40,7 +40,7 @@ class RegisterUser extends React.Component {
     }
 
     onCloseModal = () => {
-        const { email, password } = this.state;
+        const { email, password } = this.state.user;
         
         this.props.closeModal();
 

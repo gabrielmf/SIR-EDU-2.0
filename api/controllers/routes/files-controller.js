@@ -58,12 +58,19 @@ router.get('/files/:id', function(req, res, next){
 });
 
 router.get('/files', function(req, res, next){
-    gfs.files.find({ 'metadata._studentId': req.query.studentId }).toArray()
-    .then((files) => {
-      res.json(files);
-    }).catch((err) => {
-      next(err);
-    })
+    const studentId = req.query.studentId;
+    
+    if(studentId) {
+      gfs.files.find({ 'metadata._studentId': studentId }).toArray()
+      .then((files) => {
+        res.json(files);
+      }).catch((err) => {
+        next(err);
+      })
+    } else {
+      res.status(400);
+      res.send();
+    }
 });
 
 // TODO return error codes

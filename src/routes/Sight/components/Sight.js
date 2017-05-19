@@ -21,6 +21,12 @@ const filesCarousel = (items, actions) => {
     )
 }
 
+const searchStudent = (students, id) => {
+    let student = students.filter((student) => student._id === id);
+    console.log(student);
+    return student.length > 1 ? null : student[0]; 
+}
+
 class Sight extends React.Component {
     constructor(props) {
         super(props);
@@ -29,9 +35,9 @@ class Sight extends React.Component {
                 _studentId: this.props.params.id || '',
                 date: '',
                 text: ''
-            }
+            },
+            student: ''
         };
-        this.student = '';
         this.handleEditorChange = this.handleEditorChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
@@ -40,7 +46,15 @@ class Sight extends React.Component {
     }
 
     componentDidMount() {
-        const { getFiles, routeParams, files } = this.props;
+        console.log('aqui');
+        const { getFiles, routeParams, files, students, params } = this.props;
+        let student = searchStudent(students, params.id);
+
+        if(student) {
+            this.state.student = student;
+        }
+
+        //ELSE -> TODO get student from server
 
         if(!files.list.length) {
             getFiles(routeParams.id);
@@ -97,6 +111,8 @@ class Sight extends React.Component {
 
     render() {
         const { files } = this.props;
+        const { student } = this.state;
+        const studentName = student.name + ' ' + student.lastName;
         const actions = {
             insert: this.handleInsertLink
         };
@@ -133,10 +149,13 @@ class Sight extends React.Component {
                 <h1 class="text-center"></h1>
                 <div class="student-info">
                     <div class="col-md-6">
-                        <TextField fullWidth={true} floatingLabelText="Nome do Aluno"/>
+                        <TextField fullWidth={true}
+                            floatingLabelText="Nome do Aluno"
+                            value={studentName}
+                        />
                     </div>
                     <div class="col-md-3">
-                        <TextField fullWidth={true} floatingLabelText="Turma"/>
+                        <TextField fullWidth={true} value={student.classNumber || ''} floatingLabelText="Turma"/>
                     </div>
                     <div class="col-md-3">
                         <DatePicker DateTimeFormat={Intl.DateTimeFormat}
@@ -153,7 +172,8 @@ class Sight extends React.Component {
                             config={{
                                 plugins: 'link paste autoresize',
                                 toolbar: 'undo redo | bold italic | link | alignleft aligncenter alignright',
-                                autoresize_max_height: 1000
+                                autoresize_max_height: 1000,
+                                statusbar: false
                             }}
                             onChange={this.handleEditorChange}
                         />
