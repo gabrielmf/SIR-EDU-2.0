@@ -153,17 +153,18 @@ class Sight extends React.Component {
                             config={{
                                 plugins: 'link paste autoresize',
                                 toolbar: 'undo redo | bold italic | link | alignleft aligncenter alignright',
-                                autoresize_min_height: 400,
-                                autoresize_max_height: 600
+                                autoresize_max_height: 1000
                             }}
                             onChange={this.handleEditorChange}
                         />
                     </Paper>
                 </div>
-                {files.list && files.list.length && 
+                <div class="col-md-12">
+                    {files.list && files.list.length && 
                     <Slider>
                         {filesCarousel(files.list, actions)}
                     </Slider>}
+                </div>
             </div>
         );
     }

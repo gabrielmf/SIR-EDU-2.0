@@ -23,11 +23,9 @@ class Slider extends React.Component {
     };
 
     return (
-      <div class="slider-toolbar">
         <SlickSlider {...settings}>
             {this.props.children}
         </SlickSlider>
-      </div>
     );
   }
 };
