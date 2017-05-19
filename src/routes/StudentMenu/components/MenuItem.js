@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 import './StudentMenu.scss'
-
+console.log(this);
 export const MenuItem = (props) => (
     <div class="row menu-items">
         <div class="col-md-2">

@@ -17,7 +17,7 @@ class Slider extends React.Component {
       speed: 500,
       infinite: false,
       slidesToShow: 5,
-      slidesToScroll: 1,
+      slidesToScroll: 5,
       lazyLoad: true,
       className: 'slider-border'
     };

@@ -1,7 +1,14 @@
 import React from 'react'
 import { FlatButton, DatePicker, TextField } from 'material-ui'
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import { Modal } from 'react-bootstrap'
 import './Slider.scss'
+
+const cardTextStyle = {
+    overflow: 'hidden',
+    padding: '0 16px',
+    height: 40
+}
 
 class SliderItem extends React.Component {
     constructor(props) {
@@ -19,24 +26,33 @@ class SliderItem extends React.Component {
         const { item, editable } = this.props;
         const type = item.contentType.split('/')[0] || '';
         const url = '/api/files/' + item._id;
-        
+        const date = new Date(item.metadata.date);
+        const displayDate = date.getDay() + '/' + date.getMonth() + '/' + date.getFullYear();
+
         return (
-            <div class="slider-item thumbnail">
-                <div class="info" onClick={() => { this.setState({open: true}) }}>
-                    {type === 'image' ?  <img src={url}/> :
-                    <video draggable="true" preload="metadata" src={url}></video>}
-                    <p class="comment">{item.metadata.comment}</p>
-                </div>
-                <div class="text-center">
-                    <FlatButton label="Editar"/>&nbsp;
+            <div>
+            <Card style={{margin: 5}}>
+                <CardMedia style={{cursor: 'pointer'}} onClick={() => { this.setState({open: true}) }}>
+                { 
+                    type === 'image' ? <img height="125" src={url}/> : 
+                    <video height="125" preload="metadata" src={url}></video>
+                }
+                </CardMedia>
+                <CardTitle subtitle={displayDate} style={{padding: '2px 16px 5px'}}/>
+                <CardText style={cardTextStyle}>
+                    {item.metadata.comment}
+                </CardText>
+                <CardActions>
+                    <FlatButton label="Editar"/>
                     { editable && 
                         <FlatButton
                             label="Inserir" primary={true} 
                             onTouchTap={() => { this.props.actions.insert(url, item.metadata.comment); }}
                         />
                     }
-                </div>
-                <Modal show={this.state.open} onHide={this.close} bsSize="large">
+                </CardActions>
+            </Card>
+            <Modal show={this.state.open} onHide={this.close} bsSize="large">
                     <Modal.Header closeButton>
                         <Modal.Title>Visualizar</Modal.Title>
                     </Modal.Header>
@@ -48,15 +64,11 @@ class SliderItem extends React.Component {
                                 <video draggable="true" controls preload="metadata" src={url}></video>
                                 }
                             </div>
-                            <DatePicker 
-                                fullWidth={false} 
-                                DateTimeFormat={Intl.DateTimeFormat} 
-                                locale="pt-br"
-                                floatingLabelFixed={true}
+                            <TextField
                                 floatingLabelText="Data:"
-                                value={item.metadata.date}
+                                floatingLabelFixed={true}
+                                value={displayDate}
                             />
-                            <p>{item.metadata.date}</p>
                             <div>
                                 <TextField
                                     floatingLabelText="Comentário:"
@@ -70,7 +82,7 @@ class SliderItem extends React.Component {
                     </Modal.Body>
                 </Modal>
             </div>
-        )
+        );
     }
 };
 
