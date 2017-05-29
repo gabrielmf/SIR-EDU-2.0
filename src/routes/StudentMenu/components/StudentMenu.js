@@ -2,6 +2,14 @@ import React from 'react'
 import MenuItem from './MenuItem'
 import Slider from 'components/Slider'
 
+const timelineCarousel = (items) => {
+    return items.map((item, index) =>(
+        <div key={index}>
+            <SliderItem item={item} editable={true}/>
+        </div>)
+    )
+}
+
 export default class StudentMenu extends React.Component {
     constructor(props) {
         super(props);

@@ -46,7 +46,7 @@ class SliderItem extends React.Component {
                     <FlatButton label="Editar"/>
                     { editable && 
                         <FlatButton
-                            label="Inserir" primary={true} 
+                            label="Copiar" primary={true} 
                             onTouchTap={() => { this.props.actions.insert(url, item.metadata.comment); }}
                         />
                     }

@@ -76,7 +76,7 @@ class Sight extends React.Component {
     }
 
     handleSave = () => {
-        //this.props.saveJudgement(this.state);
+        this.props.saveJudgement(this.state);
         console.log(this.state.judgement)
     }
 
@@ -101,8 +101,22 @@ class Sight extends React.Component {
         tinymce.activeEditor.execCommand('mceInsertContent', false, val );
     }
 
+    shouldChangeLocation = (judgement) => {
+        if (judgement.hasOwnProperty('success') && judgement.success) {
+            browserHistory.push('/aluno/' + this.props.params.id);
+        }
+    }
+
+    componentDidUpdate() {
+        this.shouldChangeLocation(this.props.judgement);
+    }
+
+    componentWillUnmount() {
+        this.props.clearJudgementState();
+    }
+
     render() {
-        const { files, params, students } = this.props;
+        const { judgement, files, params, students } = this.props;
         let student = searchStudent(students, params.id) || {};
         const studentName = student.name + ' ' + (student.lastName || '');
         const actions = {
@@ -111,7 +125,7 @@ class Sight extends React.Component {
 
         return (
             <div class="container sight">
-                <LoadingSpinner loading={files.isFetching}/>
+                <LoadingSpinner loading={files.isFetching || judgement.isFetching}/>
                 <Toolbar className="toolbar-edit">
                     <ToolbarGroup>
                         <ToolbarTitle text="Parecer" />
