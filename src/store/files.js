@@ -44,12 +44,13 @@ export function success(type, data) {
 
 export function uploadFile(file) {
   return dispatch => {
-      request(UPLOAD_FILE_REQUEST);
+      dispatch(request(UPLOAD_FILE_REQUEST));
     return filesService.uploadFile(file)
-      .then((data) => {
-        success(UPLOAD_FILE_SUCCESS, data);
+      .then((res) => {
+        console.log(res.data)
+        dispatch(success(UPLOAD_FILE_SUCCESS, res.data));
     }).catch((error) => {
-        failure(UPLOAD_FILE_FAILURE, error);
+        dispatch(failure(UPLOAD_FILE_FAILURE, error));
     })
   } 
 }
@@ -70,7 +71,10 @@ export function getFiles(studentId) {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [UPLOAD_FILE_SUCCESS] : (state, action) => state,
+  [UPLOAD_FILE_SUCCESS] : (state, action) => ({ 
+      isFetching: action.payload.isFetching, 
+      list: [ ...state.list, action.payload.data ]
+  }),
   [GET_FILES_SUCCESS] : (state, action) => ({ 
       isFetching: action.payload.isFetching, 
       list: [ ...action.payload.data ]

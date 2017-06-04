@@ -34,6 +34,7 @@ class StudentFiles extends React.Component {
 
     handleSave() {
         this.props.uploadFile(this.state);
+        browserHistory.push('/aluno/' + this.props.params.id);
     }
     
     render() {
