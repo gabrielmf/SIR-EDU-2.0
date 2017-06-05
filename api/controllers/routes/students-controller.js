@@ -33,6 +33,7 @@ let upload = multer({ storage: storage });
 
 //TODO 1 - middleware to check user permissions, 2- treat errors with some middleware
 router.post('/students', upload.any(), function(req, res, next) {
+    
     let newStudent = {
         _createdBy: req.user._id
     };
@@ -103,24 +104,39 @@ router.delete('/students/:id', function(req, res, next) {
     })
 });
 
-router.put('/students', upload.any(), function(req, res, next) {
+router.put('/students/:id', upload.any(), function(req, res, next) {
     let updateStudent = {};
     Object.assign(updateStudent, req.body);
 
-    if(req.files.length > 0) {
-        let file = req.files[0];
-        updateStudent['image.path'] = file.path;
-        updateStudent['image.contentType'] = file.mimetype;
+    if(updateStudent.specialNeeds) {
+        newStudent.specialNeeds = newStudent.specialNeeds.split(',');
     }
 
-    //TODO remove old image from disk if user updates successefully
-    studentService.update(updateStudent)
-    .then((student) => {
-        res.end();
+    if(req.files && req.files.length > 0) {
+        req.files.forEach((file) => {
+             updateStudent[file.fieldname] = {
+                 path: file.path,
+                 mimeType: file.mimetype
+             }
+        });
+    }
+
+    studentService.find({_studentId: req.params.id, _createdBy: req.user._id})
+        .then((data) => {
+        console.log('found', data);
     })
-    .catch((err) => {
+        .catch((err) => {
         next(err);
     })
+
+    // //TODO remove old image from disk if user updates successefully
+    // studentService.update(updateStudent)
+    // .then((student) => {
+    //     res.end();
+    // })
+    // .catch((err) => {
+    //     next(err);
+    // })
 });
 
 module.exports = router;

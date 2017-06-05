@@ -5,9 +5,10 @@ let mongoose = require('mongoose'),
 
 let JudgementSchema = new Schema({
   _createdBy: { type: String, ref: 'User' },
-  _student: { type: String, ref: 'Student' },
+  _studentId: { type: String, ref: 'Student' },
   date: { type: Date },
-  text: { type: String }
+  text: { type: String },
+  type: { type: String }
  });
 
 // set up a mongoose model

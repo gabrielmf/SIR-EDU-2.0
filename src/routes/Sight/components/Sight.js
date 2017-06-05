@@ -32,7 +32,7 @@ class Sight extends React.Component {
         super(props);
         this.state = {
             judgement: {
-                _studentId: this.props.params.id || '',
+                studentId: this.props.params.id || '',
                 date: '',
                 text: ''
             },
@@ -76,8 +76,7 @@ class Sight extends React.Component {
     }
 
     handleSave = () => {
-        this.props.saveJudgement(this.state);
-        console.log(this.state.judgement)
+        this.props.saveJudgement(this.state.judgement);
     }
 
     handleTouchTap = (event) => {
@@ -109,10 +108,6 @@ class Sight extends React.Component {
 
     componentDidUpdate() {
         this.shouldChangeLocation(this.props.judgement);
-    }
-
-    componentWillUnmount() {
-        this.props.clearJudgementState();
     }
 
     render() {

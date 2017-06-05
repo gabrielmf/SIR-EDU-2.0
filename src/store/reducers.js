@@ -12,7 +12,7 @@ const appReducer = (asyncReducers) => {
     auth: loginReducer,
     students: studentsReducer,
     files : filesReducer,
-    judgement: judgementReducer,
+    judgements: judgementReducer,
     user: usersReducer,
     ...asyncReducers
   })

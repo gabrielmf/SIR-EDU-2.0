@@ -8,7 +8,7 @@ class Slider extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-      return this.props.children !== nextProps.children;
+    return this.props.children !== nextProps.children;
   }
   
   render() {
@@ -18,7 +18,7 @@ class Slider extends React.Component {
       infinite: false,
       slidesToShow: 5,
       slidesToScroll: 5,
-      lazyLoad: true,
+      lazyLoad: false,
       className: 'slider-border'
     };
 

@@ -3,12 +3,12 @@ import judgementService from 'services/judgement-service'
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const UPLOAD_FILE_REQUEST = 'UPLOAD_FILE_REQUEST'
-export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
-export const UPLOAD_FILE_FAILURE = 'UPLOAD_FILE_FAILURE'
-export const GET_FILE_REQUEST = 'GET_FILE_REQUEST'
-export const GET_FILE_SUCCESS = 'GET_FILE_SUCCESS'
-export const GET_FILE_FAILURE = 'GET_FILE_FAILURE'
+export const UPLOAD_JUDGEMENT_REQUEST = 'UPLOAD_JUDGEMENT_REQUEST'
+export const UPLOAD_JUDGEMENT_SUCCESS = 'UPLOAD_JUDGEMENT_SUCCESS'
+export const UPLOAD_JUDGEMENT_FAILURE = 'UPLOAD_JUDGEMENT_FAILURE'
+export const GET_ALL_JUDGEMENTS_REQUEST = 'GET_ALL_JUDGEMENTS_REQUEST'
+export const GET_ALL_JUDGEMENTS_SUCCESS = 'GET_ALL_JUDGEMENTS_SUCCESS'
+export const GET_ALL_JUDGEMENTS_FAILURE = 'GET_ALL_JUDGEMENTS_FAILURE'
 const CLEAR_JUDGMENT_STATE = 'CLEAR_JUDGEMENT_STATE'
 
 // ------------------------------------
@@ -47,11 +47,22 @@ export function success(type, data) {
 
 export function saveJudgement(jdgmnt) {
   return dispatch => {
-    dispatch(request(UPLOAD_FILE_REQUEST));
+      dispatch(request(UPLOAD_JUDGEMENT_REQUEST));
     return judgementService.save(jdgmnt).then((res) => {
-        dispatch(success(UPLOAD_FILE_SUCCESS, res.data));
+        dispatch(success(UPLOAD_JUDGEMENT_SUCCESS, res.data));
     }).catch((error) => {
-        dispatch(failure(UPLOAD_FILE_FAILURE, error));
+        dispatch(failure(UPLOAD_JUDGEMENT_FAILURE, error));
+    })
+  } 
+}
+
+export function getJudgements(studentId) {
+    return dispatch => {
+      dispatch(request(GET_ALL_JUDGEMENTS_REQUEST));
+    return judgementService.getAll(studentId).then((res) => {
+        dispatch(success(GET_ALL_JUDGEMENTS_SUCCESS, res.data));
+    }).catch((error) => {
+        dispatch(failure(GET_ALL_JUDGEMENTS_FAILURE, error));
     })
   } 
 }
@@ -69,18 +80,22 @@ export function clearJudgementState() {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [UPLOAD_FILE_REQUEST] : (state, action) => ({ ...state , ...action.payload }),
-  [UPLOAD_FILE_SUCCESS] : (state, action) => (
+  [UPLOAD_JUDGEMENT_REQUEST] : (state, action) => ({ ...state , ...action.payload }),
+  [UPLOAD_JUDGEMENT_SUCCESS] : (state, action) => (
     { ...state,
       list: [...state.list, action.payload.data ],
       isFetching: action.payload.isFetching,
       success: action.payload.success
     }
   ),
-  [UPLOAD_FILE_FAILURE] : (state, action) => ({ ...state, ...action.payload }),
+  [UPLOAD_JUDGEMENT_FAILURE] : (state, action) => ({ ...state, ...action.payload }),
   [CLEAR_JUDGMENT_STATE] : (state, action) => ({
       ...state,
       ...action.payload
+  }),
+  [GET_ALL_JUDGEMENTS_SUCCESS] : (state, action) => ({
+    isFetching: action.payload.isFetching,
+    list: [ ...action.payload.data ]
   })
 }
 

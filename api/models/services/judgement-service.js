@@ -3,10 +3,10 @@
 let mongoose = require('mongoose');
 let BaseService = require('../base-service');
 
-class StudentService extends BaseService {
+class JudgementService extends BaseService {
     constructor() {
         super('judgement');
     }
 }
 
-module.exports = StudentService;
+module.exports = JudgementService;

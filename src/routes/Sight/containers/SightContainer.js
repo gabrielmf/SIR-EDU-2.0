@@ -12,7 +12,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
     students: state.students.list,
     files: state.files,
-    judgement: state.judgement
+    judgement: state.judgements
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SightComponent)

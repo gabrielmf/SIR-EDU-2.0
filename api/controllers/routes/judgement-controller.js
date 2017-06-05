@@ -5,22 +5,26 @@ const JudgementService = require('../../models/services/judgement-service');
 const judgementService = new JudgementService();
 
 router.post('/judgement', function(req, res, next) {
-    console.log('Salvando parecer', req.body);
+    let newJudgement = {
+        _createdBy: req.user._id,
+        _studentId: req.body.studentId,
+        text: req.body.text || '',
+        date: req.body.date || '',
+        type: 'judgement'
+    };
 
-    // judgementService.save(req.body)
-    //     .then((data) => {
-    //         res.json(data);
-    //     })
-    //     .catch((err) => {
-    //         console.log(err);
-    //         next(err);
-    // });
-
-    res.end();
+    judgementService.save(newJudgement)
+        .then((data) => {
+            res.json(data);
+        })
+        .catch((err) => {
+            console.log(err);
+            next(err);
+    });
 });
 
 router.get('/judgement', function(req, res, next) {
-    judgementService.find({ _createdBy: req.user._id, _studentId: req.body.studentId })
+    judgementService.find({ _createdBy: req.user._id, _studentId: req.query.studentId })
         .then((data) => {
             res.json(data);
         })

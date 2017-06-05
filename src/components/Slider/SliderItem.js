@@ -1,7 +1,6 @@
 import React from 'react'
-import { FlatButton, DatePicker, TextField } from 'material-ui'
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import { Modal } from 'react-bootstrap'
+import CardMediaItem  from 'components/Cards/MediaItem'
+import CardJudgementItem from 'components/Cards/JudgementItem'
 import './Slider.scss'
 
 const cardTextStyle = {
@@ -13,76 +12,17 @@ const cardTextStyle = {
 class SliderItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            open: false
-        }
-    }
-
-    close = () => {
-        this.setState({open: false});
     }
 
     render() {
-        const { item, editable } = this.props;
-        const type = item.contentType.split('/')[0] || '';
-        const url = '/api/files/' + item._id;
-        const date = new Date(item.metadata.date);
-        const displayDate = date.getDay() + '/' + date.getMonth() + '/' + date.getFullYear();
-
-        return (
-            <div>
-            <Card style={{margin: 5}}>
-                <CardMedia style={{cursor: 'pointer'}} onClick={() => { this.setState({open: true}) }}>
-                { 
-                    type === 'image' ? <img height="125" src={url}/> : 
-                    <video height="125" preload="metadata" src={url}></video>
-                }
-                </CardMedia>
-                <CardTitle subtitle={displayDate} style={{padding: '2px 16px 5px'}}/>
-                <CardText style={cardTextStyle}>
-                    {item.metadata.comment}
-                </CardText>
-                <CardActions>
-                    <FlatButton label="Editar"/>
-                    { editable && 
-                        <FlatButton
-                            label="Copiar" primary={true} 
-                            onTouchTap={() => { this.props.actions.insert(url, item.metadata.comment); }}
-                        />
-                    }
-                </CardActions>
-            </Card>
-            <Modal show={this.state.open} onHide={this.close} bsSize="large">
-                    <Modal.Header closeButton>
-                        <Modal.Title>Visualizar</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <div class="item-modal">
-                            <div class="text-center">
-                                { 
-                                type === 'image' ? <img src={url}/> : 
-                                <video draggable="true" controls preload="metadata" src={url}></video>
-                                }
-                            </div>
-                            <TextField
-                                floatingLabelText="Data:"
-                                floatingLabelFixed={true}
-                                value={displayDate}
-                            />
-                            <div>
-                                <TextField
-                                    floatingLabelText="Comentário:"
-                                    floatingLabelFixed={true}
-                                    multiLine={true}
-                                    fullWidth={true}
-                                    value={item.metadata.comment}
-                                />
-                            </div>
-                        </div>
-                    </Modal.Body>
-                </Modal>
-            </div>
-        );
+        const { item, editable, actions } = this.props;
+        const type = item.hasOwnProperty('contentType') ? item.contentType.split('/')[0] : item.type;
+        
+        if (type === 'image' || type === 'video') {
+            return (<CardMediaItem item={item} editable={editable} actions={actions}/>);
+        } else {
+            return (<CardJudgementItem item={item} editable={editable}/>);
+        }
     }
 };
 
