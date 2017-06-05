@@ -50,7 +50,7 @@ class JudgementItem extends React.Component {
                     <FlatButton label="Remover" secondary={true} />
                 </CardActions>
             </Card>
-            <Modal show={this.state.open} onHide={this.close} bsSize="large">
+            <Modal show={this.state.open} onHide={this.close} bsSize="large" backdrop="static">
                     <Modal.Header closeButton>
                         <Modal.Title>Visualizar</Modal.Title>
                     </Modal.Header>
