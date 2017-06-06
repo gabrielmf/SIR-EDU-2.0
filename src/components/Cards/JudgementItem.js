@@ -36,11 +36,11 @@ class JudgementItem extends React.Component {
                            style={{margin:0, fontSize:'7em'}}></i>
                         <div style={{paddingTop: 46}}>
                             <strong class="pull-left">Parecer</strong>
-                            <CardTitle subtitle={displayDate}/>
+                            <CardTitle subtitle={item.title || ''}/>
                         </div>
                     </div>
                 </CardMedia>
-                <CardTitle subtitle="Texto:" style={{padding: '2px 16px 5px', cursor: 'pointer'}}
+                <CardTitle subtitle={displayDate} style={{padding: '2px 16px 5px', cursor: 'pointer'}}
                            onClick={() => { this.setState({open: true}) }}/>
                 <CardText style={cardTextStyle}>
                     <p dangerouslySetInnerHTML={{__html: item.text}}/>

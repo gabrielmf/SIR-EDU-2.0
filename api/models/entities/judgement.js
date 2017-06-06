@@ -6,6 +6,7 @@ let mongoose = require('mongoose'),
 let JudgementSchema = new Schema({
   _createdBy: { type: String, ref: 'User' },
   _studentId: { type: String, ref: 'Student' },
+  title: { type: String },
   date: { type: Date },
   text: { type: String },
   type: { type: String }

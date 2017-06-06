@@ -33,6 +33,7 @@ class Sight extends React.Component {
         this.state = {
             judgement: {
                 studentId: this.props.params.id || '',
+                title: '',
                 date: '',
                 text: ''
             },
@@ -80,7 +81,6 @@ class Sight extends React.Component {
     }
 
     handleTouchTap = (event) => {
-        // This prevents ghost click.
         event.preventDefault();
 
         this.setState({
@@ -102,6 +102,7 @@ class Sight extends React.Component {
 
     shouldChangeLocation = (judgement) => {
         if (judgement.hasOwnProperty('success') && judgement.success) {
+            this.props.clearJudgementState();
             browserHistory.push('/aluno/' + this.props.params.id);
         }
     }
@@ -119,46 +120,19 @@ class Sight extends React.Component {
         };
 
         return (
-            <div class="container sight">
+            <div class="sight">
                 <LoadingSpinner loading={files.isFetching || judgement.isFetching}/>
-                <Toolbar className="toolbar-edit">
-                    <ToolbarGroup>
-                        <ToolbarTitle text="Parecer" />
-                        <ToolbarSeparator />
-                        <FlatButton
-                            onTouchTap={this.handleTouchTap}
-                            label="Opções"
-                        />
-                        <Popover
-                            open={this.state.open}
-                            anchorEl={this.state.anchorEl}
-                            anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                            targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                            onRequestClose={this.handleRequestClose}
-                        >
-                        <Menu>
-                            <MenuItem primaryText="Imprimir" />
-                            <MenuItem primaryText="Gerar aquivo Word" />
-                            <MenuItem primaryText="Gerar aquivo PDF" />
-                        </Menu>
-                        </Popover>
-                    </ToolbarGroup>
-                    <ToolbarGroup lastChild={true}>
-                        <RaisedButton label="Salvar" primary={true} onTouchTap={this.handleSave} />
-                    </ToolbarGroup>
-                </Toolbar>
-                <h1 class="text-center"></h1>
-                <div class="student-info">
-                    <div class="col-md-6">
-                        <TextField fullWidth={true}
-                            floatingLabelText="Nome do Aluno"
-                            value={studentName}
+                <h1 class="text-center page-title">Parecer</h1>
+                <div class="row student-info">
+                    <div class="col-md-5">
+                        <TextField 
+                            fullWidth={true} 
+                            value={this.state.judgement.title || ''} 
+                            floatingLabelText="Título"
+                            onChange={(evt, value) => { this.handleChange('title', value) }}
                         />
                     </div>
-                    <div class="col-md-3">
-                        <TextField fullWidth={true} value={student.classNumber || ''} floatingLabelText="Turma"/>
-                    </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 pull-right">
                         <DatePicker DateTimeFormat={Intl.DateTimeFormat}
                             locale="pt-br"
                             onChange={(evt, value)=>{this.handleChange('date', value)}}
@@ -166,7 +140,7 @@ class Sight extends React.Component {
                         />
                     </div>
                 </div>
-                <div class="col-md-12 text-area">
+                <div class="row text-area">
                     <Paper style={paperStyle} zDepth={5}>
                         <TinyMCE
                             content={this.state.judgement.text}
@@ -180,7 +154,7 @@ class Sight extends React.Component {
                         />
                     </Paper>
                 </div>
-                <div class="col-md-12 slider">
+                <div class="row slider">
                     {
                         files.list.length > 0 ?
                         <Slider>
@@ -190,6 +164,10 @@ class Sight extends React.Component {
                             <strong>Aviso:</strong> Nenhum arquivo cadastrado
                         </Alert>
                     }
+                </div>
+                <div class="row actions pull-right">
+                    <RaisedButton class="btn-actions" label="Cancelar" onClick={this.handleCancel}/>
+                    <RaisedButton label="Salvar" primary={true} onClick={this.handleSave} />
                 </div>
             </div>
         );

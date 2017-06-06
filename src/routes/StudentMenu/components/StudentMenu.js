@@ -71,7 +71,7 @@ export default class StudentMenu extends React.Component {
                     <div class="col-md-12">
                         <MenuItem location={this.props.location}/>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12 timeline">
                         { timelineList.length &&
                           <Slider>
                               {timelineCarousel(timelineList)}

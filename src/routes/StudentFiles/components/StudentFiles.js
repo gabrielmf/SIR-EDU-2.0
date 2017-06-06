@@ -71,9 +71,9 @@ class StudentFiles extends React.Component {
                     />
                 </div>
                 <div class="col-md-12">
-                    <div class="pull-left actions">
+                    <div class="pull-right actions">
                         <RaisedButton class="btn-actions" label="Cancelar" onClick={this.handleCancel}/>
-                        <RaisedButton class="btn-actions" 
+                        <RaisedButton 
                             label="Salvar"
                             primary={true}
                             disabled={this.state.file === null}

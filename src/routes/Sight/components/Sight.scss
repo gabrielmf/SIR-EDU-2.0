@@ -1,4 +1,7 @@
 .sight {
+    .page-title {
+        margin-bottom: 0;
+    }
 
     .text-area {
         margin-bottom: 50px;
@@ -13,5 +16,13 @@
 
     .slider {
         margin-bottom: 50px;
+    }
+
+    .actions {
+        margin-bottom: 50px;
+    }
+
+    .btn-actions {
+        margin-right: 5px;
     }
 }

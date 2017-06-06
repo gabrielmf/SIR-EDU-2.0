@@ -1,6 +1,6 @@
 .student-header {
     .avatar {
-        height: 100px;
+        height: 75px;
         margin: 5px;
     }
 }
@@ -39,5 +39,11 @@
         background:#fcfcfc;
         border: 1px solid #f6f6f6;
         cursor: pointer;
+    }
+}
+
+.student-menu {
+    .timeline {
+        margin-top: 100px;
     }
 }

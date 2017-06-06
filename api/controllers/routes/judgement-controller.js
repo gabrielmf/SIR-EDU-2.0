@@ -8,6 +8,7 @@ router.post('/judgement', function(req, res, next) {
     let newJudgement = {
         _createdBy: req.user._id,
         _studentId: req.body.studentId,
+        title: req.body.title || '',
         text: req.body.text || '',
         date: req.body.date || '',
         type: 'judgement'
