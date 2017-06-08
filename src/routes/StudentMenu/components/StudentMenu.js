@@ -1,11 +1,9 @@
 import React from 'react'
 import MenuItem from './MenuItem'
 import Slider from 'components/Slider'
-import SliderItem from 'components/Slider/SliderItem';
-import LoadingSpinner from 'components/LoadingSpinner';
-import defaultAvatar from 'public/default-avatar.png'
-import TextField from 'material-ui/TextField';
-import Divider from 'material-ui/Divider';
+import SliderItem from 'components/Slider/SliderItem'
+import LoadingSpinner from 'components/LoadingSpinner'
+import StudentHeader from 'components/StudentHeader'
 
 const timelineCarousel = (items) => {
     return items.map((item, index) =>(
@@ -15,71 +13,54 @@ const timelineCarousel = (items) => {
     )
 }
 
-const searchStudent = (students, id) => {
-    let student = students.filter((student) => student._id === id);
-    return student.length > 1 ? null : student[0]; 
+const getStudent = (students, id) => {
+    let student = null;
+
+    if (students && students.length > 0) {
+        student = students.filter((sdnt) => sdnt._id === id);
+    }
+
+    return student && student.length > 0 ? student[0] : null;
 }
 
 export default class StudentMenu extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            student: null
-        }
     }
 
     componentDidMount() {
-        const { students, getFiles, getJudgements, routeParams } = this.props;
+        const { getFiles, getJudgements, routeParams } = this.props;
         getFiles(routeParams.id);
         getJudgements(routeParams.id);
-        this.setState({student: searchStudent(students.list, routeParams.id)});
     }
 
     render() {
-        const { judgements, files } = this.props;
+        const { students, routeParams, judgements, files } = this.props;
         const timelineList = judgements.list.concat(files.list);
+        const student = getStudent(students.list, routeParams.id);
         
         return (
             <div>
-            { this.state.student && 
-                <nav class="navbar navbar-default student-header">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img class="thumbnail avatar" src={defaultAvatar}/>
+                <LoadingSpinner loading={files.isFetching || judgements.isFetching}/>
+                {student ? <StudentHeader student={student}/> : null}
+                <div class="container">
+                    { this.props.children ? this.props.children :
+                    <div class="row student-menu">
+                        <div class="col-md-12 text-center">
+                            <h1>Menu de Registro</h1>
                         </div>
-                        <div class="col-md-4">
-                            <TextField floatingLabelText="Nome:" value={this.state.student.name} underlineShow={false} />
-                            <Divider />
+                        <div class="col-md-12">
+                            <MenuItem location={this.props.location}/>
                         </div>
-                        <div class="col-md-4">
-                            <TextField floatingLabelText="Escola:" value={this.state.student.school || ''} underlineShow={false} />
-                            <Divider />
+                        <div class="col-md-12 timeline">
+                            { timelineList.length > 0 &&
+                            <Slider class="col-md-12">
+                                {timelineCarousel(timelineList)}
+                            </Slider>
+                            }
                         </div>
-                        <div class="col-md-1">
-                            <TextField floatingLabelText="Turma:" value={this.state.student.classNumber || ''} underlineShow={false} />
-                            <Divider />
-                        </div>                             
-                    </div>
-                </nav>
-            }
-            <LoadingSpinner loading={files.isFetching || judgements.isFetching}/>
-            { this.props.children ? this.props.children :
-                <div class="row student-menu">
-                    <div class="col-md-12 text-center">
-                        <h1>Menu de Registro</h1>
-                    </div>
-                    <div class="col-md-12">
-                        <MenuItem location={this.props.location}/>
-                    </div>
-                    <div class="col-md-12 timeline">
-                        { timelineList.length &&
-                          <Slider>
-                              {timelineCarousel(timelineList)}
-                          </Slider>
-                        }
-                    </div>
+                    </div>}
                 </div>
-            }
             </div>
         );
     }

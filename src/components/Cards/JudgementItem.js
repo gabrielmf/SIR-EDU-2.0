@@ -29,17 +29,17 @@ class JudgementItem extends React.Component {
         return (
             <div>
             <Card style={{margin: 5}}>
-                <CardMedia>
-                    <div class="pull-left" style={{height: 125, padding: '16px'}}>
-                        <i class="pull-left fa fa-pencil-square-o"
+                <div style={{height: 125, padding: '16px'}}>
+                    <div class="pull-left" >
+                        <i class="fa fa-pencil-square-o"
                            aria-hidden="true"
                            style={{margin:0, fontSize:'7em'}}></i>
-                        <div style={{paddingTop: 46}}>
-                            <strong class="pull-left">Parecer</strong>
-                            <CardTitle subtitle={item.title || ''}/>
-                        </div>
                     </div>
-                </CardMedia>
+                    <div style={{paddingTop: 46}}>
+                        <strong>Parecer</strong>
+                        <CardTitle style={{padding: '0'}} subtitle={item.title || ''}/>
+                    </div>
+                </div>
                 <CardTitle subtitle={displayDate} style={{padding: '2px 16px 5px', cursor: 'pointer'}}
                            onClick={() => { this.setState({open: true}) }}/>
                 <CardText style={cardTextStyle}>
