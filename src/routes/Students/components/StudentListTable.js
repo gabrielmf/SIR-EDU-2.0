@@ -40,7 +40,7 @@ export default class StudentListTable extends React.Component {
   }
 
   render() {
-    const { students, filterText } = this.props;
+    const { students, filterText, setSelectedStudent } = this.props;
     const filteredStudents = getFilteredStudents(students.list, filterText || '');
     
     return (
@@ -92,7 +92,7 @@ export default class StudentListTable extends React.Component {
                     }
                 </TableRowColumn>
                 <TableRowColumn>
-                  <Link to={'/aluno/'+student._id}>{student.name}</Link>
+                  <Link onClick={() => { console.log('ok'); setSelectedStudent(student) }} to={'/aluno/'+student._id}>{student.name}</Link>
                 </TableRowColumn>
                 <TableRowColumn>{student.school || ''}</TableRowColumn>
                 <TableRowColumn>{student.classNumber || ''}</TableRowColumn>

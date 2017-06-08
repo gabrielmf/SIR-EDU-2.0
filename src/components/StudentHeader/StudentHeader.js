@@ -13,31 +13,29 @@ class StudentHeader extends React.Component {
         const { student } = this.props;
 
         return (
-            <div>
-                <nav class="navbar navbar-default student-header">
-                    <div class="row">
-                        <div class="col-md-2">
-                            {
-                            student.avatar ?
-                            <img class="thumbnail avatar" src={'/' + student.avatar.path}/> :
-                            <img class="thumbnail avatar" src={defaultAvatar}/>
-                            }
-                        </div>
-                        <div class="col-md-4">
-                            <TextField floatingLabelText="Nome:" value={student.name} underlineShow={false} />
-                            <Divider />
-                        </div>
-                        <div class="col-md-4">
-                            <TextField floatingLabelText="Escola:" value={student.school || ''} underlineShow={false} />
-                            <Divider />
-                        </div>
-                        <div class="col-md-1">
-                            <TextField floatingLabelText="Turma:" value={student.classNumber || ''} underlineShow={false} />
-                            <Divider />
-                        </div>                             
+            <nav class="navbar navbar-default student-header">
+                <div>
+                    <div class="col-md-2">
+                        {
+                        student.avatar ?
+                        <img class="thumbnail avatar" src={'/' + student.avatar.path}/> :
+                        <img class="thumbnail avatar" src={defaultAvatar}/>
+                        }
                     </div>
-                </nav>
-            </div>
+                    <div class="col-md-4">
+                        <TextField floatingLabelText="Nome:" value={student.name} underlineShow={false} />
+                        <Divider />
+                    </div>
+                    <div class="col-md-4">
+                        <TextField floatingLabelText="Escola:" value={student.school || ''} underlineShow={false} />
+                        <Divider />
+                    </div>
+                    <div class="col-md-1">
+                        <TextField floatingLabelText="Turma:" value={student.classNumber || ''} underlineShow={false} />
+                        <Divider />
+                    </div>                             
+                </div>
+            </nav>
         );
     }
 }

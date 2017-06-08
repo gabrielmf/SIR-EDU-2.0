@@ -11,6 +11,7 @@ export const GET_STUDENTS_LIST_REQUEST = 'GET_STUDENTS_LIST_REQUEST'
 export const GET_STUDENTS_LIST_SUCCESS = 'GET_STUDENTS_LIST_SUCCESS'
 export const GET_STUDENTS_LIST_FAILURE = 'GET_STUDENTS_LIST_FAILURE'
 const FILTER_STUDENTS = 'FILTER_STUDENTS'
+const SET_SELECTED_STUDENT = 'SET_SELECTED_STUDENT'
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -94,6 +95,16 @@ export function filterStudents(filterText) {
     }
 }
 
+export function setSelectedStudent(student) {
+    return {
+      type:  SET_SELECTED_STUDENT,
+      payload: {
+          student
+      }
+    }
+}
+
+
 export const actions = {
   SAVE_STUDENT_REQUEST,
   SAVE_STUDENT_SUCCESS,
@@ -110,13 +121,15 @@ const ACTION_HANDLERS = {
   [GET_STUDENTS_LIST_REQUEST] : (state, action) => state,
   [GET_STUDENTS_LIST_SUCCESS] : (state, action) => ({ ...state, ...action.payload }),
   [GET_STUDENTS_LIST_FAILURE] : (state, action) => state,
-  [FILTER_STUDENTS] : (state, action) => ({ ...state, ...action.payload })
+  [FILTER_STUDENTS] : (state, action) => ({ ...state, ...action.payload }),
+  [SET_SELECTED_STUDENT] : (state, action) => ({ ...state, selectedStudent: action.payload.student })
 }
 
 const initialState = {
   isFetching: false,
   list: [], 
-  filterText: ''
+  filterText: '',
+  selectedStudent: {}
 }
 
 // ------------------------------------

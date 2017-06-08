@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
 
 import StudentListTable from '../components/StudentListTable'
-import { getStudentsList, filterStudents } from 'store/students'
+import { getStudentsList, filterStudents, setSelectedStudent } from 'store/students'
 
 const mapDispatchToProps = {
     getStudentsList,
-    filterStudents
+    filterStudents,
+    setSelectedStudent
 }
 
 const mapStateToProps = (state) => ({

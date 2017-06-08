@@ -13,16 +13,6 @@ const timelineCarousel = (items) => {
     )
 }
 
-const getStudent = (students, id) => {
-    let student = null;
-
-    if (students && students.length > 0) {
-        student = students.filter((sdnt) => sdnt._id === id);
-    }
-
-    return student && student.length > 0 ? student[0] : null;
-}
-
 export default class StudentMenu extends React.Component {
     constructor(props) {
         super(props);
@@ -37,7 +27,7 @@ export default class StudentMenu extends React.Component {
     render() {
         const { students, routeParams, judgements, files } = this.props;
         const timelineList = judgements.list.concat(files.list);
-        const student = getStudent(students.list, routeParams.id);
+        const student = students.selectedStudent;
         
         return (
             <div>
