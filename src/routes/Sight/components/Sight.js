@@ -96,7 +96,9 @@ class Sight extends React.Component {
     };
 
     handleInsertLink(url, text) {
-        let val = '<a href=' + url +'>' + text + '</a>';
+        let val = '<a href=' + url +' target="_blank">' + text + '</a>';
+        // let val = '<a onclick="window.open("'+ url +'", "_blank");">' + text + '</a>';
+        console.log(val)
         tinymce.activeEditor.execCommand('mceInsertContent', false, val );
     }
 

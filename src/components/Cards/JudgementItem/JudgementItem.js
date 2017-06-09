@@ -59,18 +59,26 @@ class JudgementItem extends React.Component {
                     </Modal.Header>
                     <Modal.Body>
                         <div class="judgement-content">
-                            <Paper class="judgement-text" zDepth={4}>
-                                <div class="text-center">
-                                    {student.name}
+                            <Paper class="container-fluid judgement-text" zDepth={4}>
+                                <div class="col-md-3">
+                                    <label>Nome: </label>{student.name}
                                 </div>
-                                <div>
-                                    <TextField
-                                        floatingLabelText="Data:"
-                                        floatingLabelFixed={true}
-                                        value={displayDate}
-                                    />
-                                </div>                                
-                                <div dangerouslySetInnerHTML={{__html: item.text}}/>
+                                <div class="col-md-3">
+                                    <label>Escola: </label>{student.school || ''}
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Turma: </label>{student.classNumber || ''}
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Matrícula: </label>{student.register || ''}
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Data de nascimento: </label>{student.birthDate || ''}
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Data do parecer: </label>{displayDate}
+                                </div>
+                                <div class="col-md-12" dangerouslySetInnerHTML={{__html: item.text}}/>                      
                             </Paper>
                         </div>
                     </Modal.Body>
