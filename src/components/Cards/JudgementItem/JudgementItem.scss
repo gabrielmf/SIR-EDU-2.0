@@ -7,6 +7,19 @@
         
         .judgement-text {
             padding: 16px;
+
+            .text-container {
+                padding-top: 50px;
+            }
+
+            .text {
+                padding-top: 10px;
+            }
+
+            .signature {
+                padding-top: 20px;
+                border-bottom: 1px dotted black;
+            }
         }
     }
 }

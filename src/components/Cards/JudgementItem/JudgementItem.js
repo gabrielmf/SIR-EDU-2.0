@@ -60,25 +60,38 @@ class JudgementItem extends React.Component {
                     <Modal.Body>
                         <div class="judgement-content">
                             <Paper class="container-fluid judgement-text" zDepth={4}>
-                                <div class="col-md-3">
-                                    <label>Nome: </label>{student.name}
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <h5>{student.school}</h5>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <h1>Parecer</h1>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Nome:</label> {student.name}
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Turma:</label> {student.classNumber || ''}
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Matrícula:</label> {student.register || ''}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Data de nascimento:</label> {student.birthDate || ''}
+                                    </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <label>Escola: </label>{student.school || ''}
+                                <div class="row text-container">
+                                    <div class="col-md-5">
+                                        <label>Data:</label> {displayDate}
+                                    </div>
+                                    <div class="col-md-12 text" dangerouslySetInnerHTML={{__html: item.text}}/>
                                 </div>
-                                <div class="col-md-2">
-                                    <label>Turma: </label>{student.classNumber || ''}
+                                <div class="row text-container">
+                                    <div class="col-sm-4">
+                                        <label>Assinatura do(a) professor(a):</label>
+                                        <div class="signature"></div>
+                                    </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <label>Matrícula: </label>{student.register || ''}
-                                </div>
-                                <div class="col-md-3">
-                                    <label>Data de nascimento: </label>{student.birthDate || ''}
-                                </div>
-                                <div class="col-md-2">
-                                    <label>Data do parecer: </label>{displayDate}
-                                </div>
-                                <div class="col-md-12" dangerouslySetInnerHTML={{__html: item.text}}/>                      
                             </Paper>
                         </div>
                     </Modal.Body>

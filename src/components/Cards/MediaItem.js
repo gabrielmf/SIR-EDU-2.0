@@ -43,11 +43,11 @@ class MediaItem extends React.Component {
                 </CardText>
                 <CardActions>
                     <FlatButton label="Editar"/>
-                    { editable && 
+                    { editable ? 
                         <FlatButton
                             label="Copiar" primary={true} 
                             onTouchTap={() => { this.props.actions.insert(url, item.metadata.comment); }}
-                        />
+                        /> : <FlatButton label="Remover" secondary={true} />
                     }
                 </CardActions>
             </Card>
