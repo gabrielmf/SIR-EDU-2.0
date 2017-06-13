@@ -58,7 +58,7 @@ class StudentFiles extends React.Component {
                         locale="pt-br"
                         floatingLabelFixed={true}
                         floatingLabelText="Data:"
-                        onChange={(evt, val) => {this.handleChange('date', val)}}
+                        onChange={(evt, val) => {this.handleChange('date', val.toISOString())}}
                         placeholder="dd/mm/aaaa"
                     />
                 </div>

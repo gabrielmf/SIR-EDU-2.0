@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatButton, DatePicker, TextField, Paper } from 'material-ui'
+import { RaisedButton, FlatButton, DatePicker, TextField, Paper } from 'material-ui'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import { Modal } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -24,9 +24,9 @@ class JudgementItem extends React.Component {
     }
 
     render() {
-        const { item, editable, students } = this.props;
+        const { item, editable, students, loggedUser } = this.props;
         const date = new Date(item.date);
-        const displayDate = date.getDay() + '/' + date.getMonth() + '/' + date.getFullYear();
+        const displayDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
         const student = students.selectedStudent;
 
         return (
@@ -64,7 +64,7 @@ class JudgementItem extends React.Component {
                                     <div class="col-md-12 text-center">
                                         <h5>{student.school}</h5>
                                     </div>
-                                    <div class="col-md-12 text-center">
+                                    <div class="col-md-12 text-center title">
                                         <h1>Parecer</h1>
                                     </div>
                                     <div class="col-md-3">
@@ -74,10 +74,10 @@ class JudgementItem extends React.Component {
                                         <label>Turma:</label> {student.classNumber || ''}
                                     </div>
                                     <div class="col-md-3">
-                                        <label>Matrícula:</label> {student.register || ''}
+                                        <label>Data de nascimento:</label> {student.birthDate || ''}
                                     </div>
                                     <div class="col-md-4">
-                                        <label>Data de nascimento:</label> {student.birthDate || ''}
+                                        <label>Professor(a):</label> {loggedUser.user.name + ' ' + (loggedUser.user.lastName || '')}
                                     </div>
                                 </div>
                                 <div class="row text-container">
@@ -86,13 +86,10 @@ class JudgementItem extends React.Component {
                                     </div>
                                     <div class="col-md-12 text" dangerouslySetInnerHTML={{__html: item.text}}/>
                                 </div>
-                                <div class="row text-container">
-                                    <div class="col-sm-4">
-                                        <label>Assinatura do(a) professor(a):</label>
-                                        <div class="signature"></div>
-                                    </div>
-                                </div>
                             </Paper>
+                            <div class="btn-generate-pdf text-center">
+                                <RaisedButton label="Gerar PDF" primary={true}/>
+                            </div>
                         </div>
                     </Modal.Body>
                 </Modal>
@@ -102,7 +99,8 @@ class JudgementItem extends React.Component {
 };
 
 const mapStateToProps = (state) => ({
-    students: state.students
+    students: state.students,
+    loggedUser: state.auth
 })
 
 export default connect(mapStateToProps, {})(JudgementItem)

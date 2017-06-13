@@ -25,8 +25,8 @@ class MediaItem extends React.Component {
         const { item, editable } = this.props;
         const type = item.hasOwnProperty('contentType') ? item.contentType.split('/')[0] : '';
         const url = '/api/files/' + item._id;
-        const date = new Date(item.metadata.date);
-        const displayDate = date.getDay() + '/' + date.getMonth() + '/' + date.getFullYear();
+        const date = new Date(item.date);
+        const displayDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
         return (
             <div>
@@ -34,7 +34,7 @@ class MediaItem extends React.Component {
                 <CardMedia style={{cursor: 'pointer'}} onClick={() => { this.setState({open: true}) }}>
                 { 
                     type === 'image' ? <img height="125" src={url}/> : 
-                    <video height="125" preload="metadata" src={url}></video>
+                    <video height="125" preload="" src={url}></video>
                 }
                 </CardMedia>
                 <CardTitle subtitle={displayDate} style={{padding: '2px 16px 5px'}}/>

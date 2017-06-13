@@ -27,6 +27,21 @@ export default class StudentMenu extends React.Component {
     render() {
         const { students, routeParams, judgements, files } = this.props;
         const timelineList = judgements.list.concat(files.list);
+
+        timelineList.sort((item, nextItem) => {
+            let dateA = new Date(item.date);
+            let dateB = new Date(nextItem.date);
+
+            if (dateA > dateB) {
+                return -1;
+            }
+            if (dateA < dateB) {
+                return 1;
+            }
+
+            return 0;
+        });
+
         const student = students.selectedStudent;
         
         return (

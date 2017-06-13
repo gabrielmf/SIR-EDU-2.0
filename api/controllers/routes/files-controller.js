@@ -41,7 +41,12 @@ router.post('/files', upload.any(), function(req, res, next){
     });
 
     writestream.on('close', function(uploadedFile) {
-      res.json(uploadedFile);
+      res.json({
+          _id: uploadedFile._id,
+          contentType: uploadedFile.contentType,
+          date: uploadedFile.metadata.date,
+          metadata: uploadedFile.metadata
+      });
     });
 
     writestream.on('error', function(err) {
@@ -61,9 +66,17 @@ router.get('/files', function(req, res, next){
     const studentId = req.query.studentId;
     
     if(studentId) {
-      gfs.files.find({ 'metadata._studentId': studentId }).toArray()
+      gfs.files.find({ 'metadata._studentId': studentId }, {}, {sort: { 'metadata.date': -1 }}).toArray()
       .then((files) => {
-        res.json(files);
+        let response = files.map((f) => { 
+            return { 
+              _id: f._id, 
+              contentType: f.contentType, 
+              date: f.metadata.date, 
+              metadata: f.metadata 
+            };
+        })
+        res.json(response);
       }).catch((err) => {
         next(err);
       })

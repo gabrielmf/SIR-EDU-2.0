@@ -47,7 +47,6 @@ export function uploadFile(file) {
       dispatch(request(UPLOAD_FILE_REQUEST));
     return filesService.uploadFile(file)
       .then((res) => {
-        console.log(res.data)
         dispatch(success(UPLOAD_FILE_SUCCESS, res.data));
     }).catch((error) => {
         dispatch(failure(UPLOAD_FILE_FAILURE, error));
@@ -73,7 +72,7 @@ export function getFiles(studentId) {
 const ACTION_HANDLERS = {
   [UPLOAD_FILE_SUCCESS] : (state, action) => ({ 
       isFetching: action.payload.isFetching, 
-      list: [ ...state.list, action.payload.data ]
+      list: [ action.payload.data, ...state.list ]
   }),
   [GET_FILES_SUCCESS] : (state, action) => ({ 
       isFetching: action.payload.isFetching, 

@@ -98,7 +98,6 @@ class Sight extends React.Component {
     handleInsertLink(url, text) {
         let val = '<a href=' + url +' target="_blank">' + text + '</a>';
         // let val = '<a onclick="window.open("'+ url +'", "_blank");">' + text + '</a>';
-        console.log(val)
         tinymce.activeEditor.execCommand('mceInsertContent', false, val );
     }
 
@@ -137,7 +136,7 @@ class Sight extends React.Component {
                     <div class="col-md-3 pull-right">
                         <DatePicker DateTimeFormat={Intl.DateTimeFormat}
                             locale="pt-br"
-                            onChange={(evt, value)=>{this.handleChange('date', value)}}
+                            onChange={(evt, value)=>{this.handleChange('date', value.toISOString())}}
                             floatingLabelText="Data"
                         />
                     </div>

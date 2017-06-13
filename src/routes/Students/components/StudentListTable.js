@@ -92,7 +92,7 @@ export default class StudentListTable extends React.Component {
                     }
                 </TableRowColumn>
                 <TableRowColumn>
-                  <Link onClick={() => { console.log('ok'); setSelectedStudent(student) }} to={'/aluno/'+student._id}>{student.name}</Link>
+                  <Link onClick={() => { setSelectedStudent(student) }} to={'/aluno/'+student._id}>{student.name}</Link>
                 </TableRowColumn>
                 <TableRowColumn>{student.school || ''}</TableRowColumn>
                 <TableRowColumn>{student.classNumber || ''}</TableRowColumn>
