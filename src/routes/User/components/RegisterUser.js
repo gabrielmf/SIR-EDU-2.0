@@ -53,7 +53,7 @@ class RegisterUser extends React.Component {
         const { user, login } = this.props;
         
         return (
-            <div class="register-user">
+            <div class="container register-user">
                 <LoadingSpinner loading={this.props.user.isFetching}/>
                 <Dialog open={this.props.user.showModal} onClose={this.onCloseModal.bind(this)}>
                     <p>{user.message}</p>
