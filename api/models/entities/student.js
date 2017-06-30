@@ -18,6 +18,7 @@ let StudentSchema = new Schema({
   phoneNumber: { type: Number },
   responsible: { type: String},
   relationship: { type: String},
+  registration: { type: Number },
   address: { type: String},
   cid: { type: Number},
   historical: { type: String},
